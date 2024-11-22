@@ -29,6 +29,7 @@ const itemSchema = new Schema({
     type: Number,
     min: [-90, "La latitude ne peut pas être inférieure à -90"],
     max: [90, "La latitude ne peut pas être supérieure à 90"],
+    // @ts-ignore
     required: function () { return this.longitude !== undefined; } // Nécessaire si longitude est définie
   },
 
@@ -36,6 +37,7 @@ const itemSchema = new Schema({
     type: Number,
     min: [-180, "La longitude ne peut pas être inférieure à -180"],
     max: [180, "La longitude ne peut pas être supérieure à 180"],
+    // @ts-ignore
     required: function () { return this.latitude !== undefined; } // Nécessaire si latitude est définie
   },
 
