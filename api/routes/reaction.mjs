@@ -1,10 +1,5 @@
 import express from "express";
-
-import {
-  createReaction,
-  getReactionsByItem,
-  deleteReaction,
-} from "../controllers/reactionController.mjs";
+import { createReaction, getReactionsByItem, deleteReaction } from "../controllers/reactionController.mjs";
 
 const router = express.Router();
 

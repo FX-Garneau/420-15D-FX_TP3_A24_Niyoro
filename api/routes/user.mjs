@@ -1,11 +1,5 @@
 import { Router } from "express";
-import {
-	getUser,
-	getUsers,
-	updateUser,
-	deleteUser,
-} from "../controllers/userController.mjs";
-
+import { getUser, getUsers, updateUser, deleteUser } from "../controllers/userController.mjs";
 
 const router = Router();
 
@@ -28,7 +22,4 @@ router.delete("/users/:id", deleteUser);
 // Route pour lister tous les utilisateurs
 router.get("/users", getUsers);
 
-
 export default router;
-
-

@@ -1,14 +1,5 @@
 import { Router } from "express";
-
-import {
-  createItem,
-  getItems,
-  getItemsByUser,
-  getItem,
-  updateItem,
-  deleteItem,
-} from "../controllers/itemController.mjs";
-
+import { createItem, getItems, getItemsByUser, getItem, updateItem, deleteItem } from "../controllers/itemController.mjs";
 
 const router = Router();
 
@@ -27,6 +18,4 @@ router.delete("/items/:id_item", deleteItem);
 // Met à jour un item spécifique (seulement pour le propriétaire)
 router.put("/items/:id_item", updateItem);
 
-
 export default router;
-

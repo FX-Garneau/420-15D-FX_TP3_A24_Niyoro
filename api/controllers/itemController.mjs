@@ -1,5 +1,5 @@
 import Item from '../models/item.mjs';
-import Reaction from "../models/reaction.mjs"; 
+import Reaction from "../models/reaction.mjs";
 
 // Crée un nouvel item
 export async function createItem(req, res, next) {
@@ -13,7 +13,7 @@ export async function getItemsByUser(req, res, next) {
 };
 
 
- // Récupère un item spécifique
+// Récupère un item spécifique
 export async function getItem(req, res, next) {
 };
 

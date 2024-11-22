@@ -2,51 +2,45 @@ import User from "../models/user.mjs";
 import Item from "../models/item.mjs";
 import Tag from "../models/tag.mjs";
 import Reaction from "../models/reaction.mjs";
-
-import boycotts from "../seeds/item.mjs";
-import comments from "../seeds/tag.mjs";
-import users from "../seeds/users.mjs";
+import items from "../seeds/items.mjs";
 import reactions from "../seeds/reactions.mjs";
+import tags from "../seeds/tags.mjs";
+import users from "../seeds/users.mjs";
 
 export async function seed(req, res, next) {
-	const result = {};
+   const result = {};
 
-	try {
-		await Promise.all([
-			Item.deleteMany(),
-			Tag.deleteMany(),
-			User.deleteMany(),
-			Reaction.deleteMany(),
-		]);
+   try {
+      await Promise.all([
+         Item.deleteMany(),
+         Reaction.deleteMany(),
+         Tag.deleteMany(),
+         User.deleteMany(),
+      ]);
 
-		const [usersInsert, boycottsInsert, commentsInsert, reactionsInsert] = [
-			await User.insertMany(users),
-			await Item.insertMany(boycotts),
-			await Tag.insertMany(comments),
-			await Tag.insertMany(reactions),
-		];
+      const [itemsInsert, reactionsInsert, tagsInsert, usersInsert] = [
+         await Item.insertMany(items),
+         await Reaction.insertMany(reactions),
+         await Tag.insertMany(tags),
+         await User.insertMany(users)
+      ];
 
-		if (commentsInsert.length > 0) {
-			result.comments = commentsInsert;
-		}
+      if (tagsInsert.length > 0)
+         result.comments = tagsInsert;
 
-		if (boycottsInsert.length > 0) {
-			result.boycotts = boycottsInsert;
-		}
+      if (reactionsInsert.length > 0)
+         result.reactions = reactionsInsert;
 
-		if (usersInsert.length > 0) {
-			result.users = usersInsert;
-		}
+      if (itemsInsert.length > 0)
+         result.boycotts = itemsInsert;
 
-		if (reactionsInsert.length > 0) {
-			result.reactions = reactionsInsert;
-		}
+      if (usersInsert.length > 0)
+         result.users = usersInsert;
 
-		res.status(200).json(result);
-	} catch (err) {
-		if (!err.statusCode) {
-			err.statusCode = 500;
-		}
-		next(err);
-	}
+      res.status(200).json(result);
+   } catch (err) {
+      if (!err.statusCode)
+         err.statusCode = 500;
+      next(err);
+   }
 }

@@ -1,5 +1,5 @@
 import Tag from "../models/tag.mjs";
-import Item from "../models/item.mjs"; 
+import Item from "../models/item.mjs";
 
 // Crée un nouveau tag
 export async function createTag(req, res, next) {

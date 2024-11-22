@@ -20,14 +20,12 @@ const port = process.env.PORT ?? 3000;
 app.use(cors()); // Cross-Origin Resource Sharing
 app.use(express.json()); // application/json
 
-
 app.use("/auth", authRoutes);
 app.use(userRoutes);
 app.use(itemRoutes);
 app.use(tagRoutes);
 app.use(reactionRoutes);
 // app.use(seedRoutes);
-
 
 /**
  * Gestionnaire d'erreurs
