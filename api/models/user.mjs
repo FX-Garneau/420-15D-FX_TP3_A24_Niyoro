@@ -12,18 +12,46 @@ const userSchema = new Schema({
   username: {
     type: String,
     unique: true,
-    required: [true, "Le champ `pseudo` est requis"],
-    minLength: [1, "Le `pseudo` doit contenir au moins 1 caractère"],
-    maxLength: [50, "Le `pseudo` ne peut pas dépasser 50 caractères"],
+    required: [true, "Le champ `username` est requis"],
+    minLength: [1, "Le `username` doit contenir au moins 1 caractère"],
+    maxLength: [50, "Le `username` ne peut pas dépasser 50 caractères"],
     trim: true
   },
 
+  first_name: {
+    type: String,
+    required: [true, "Le champ `first_name` est requis"],
+    minLength: [1, "Le `first_name` doit contenir au moins 1 caractère"],
+    maxLength: [50, "Le `first_name` ne peut pas dépasser 50 caractères"],
+    trim: true
+  },
+
+  last_name: {
+    type: String,
+    required: [true, "Le champ `last_name` est requis"],
+    minLength: [1, "Le `last_name` doit contenir au moins 1 caractère"],
+    maxLength: [50, "Le `last_name` ne peut pas dépasser 50 caractères"],
+    trim: true
+  },
+
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "Le champ `email` est requis"],
+    match: [regexCourriel, "Le champ `email` n'est pas un courriel valide"],
+    trim: true
+  },
+
+  password: {
+    type: String,
+    required: [true, "Le champ `password` est requis"],
+    minLength: [6, "Le `password` doit contenir au moins 8 caractères"]
+  },
 
   avatar: {
     type: String,
     default: null
   },
-
 
   is_active: {
     type: Boolean,
@@ -31,10 +59,12 @@ const userSchema = new Schema({
     default: true
   },
 
+  is_admin: {
+    type: Boolean,
+    required: [true, "Le champ `is_admin` est requis"],
+    default: false
+  }
+
 }, { timestamps: true });
 
-
-
 export default model("User", userSchema);
-
-
