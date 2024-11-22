@@ -67,4 +67,6 @@ const userSchema = new Schema({
 
 }, { timestamps: true });
 
+// TODO: Ajouter un hook pour hasher le mot de passe avant de sauvegarder l'utilisateur
+
 export default model("User", userSchema);
