@@ -18,7 +18,6 @@ const userSchema = new Schema({
       maxLength: [50, "Le `username` ne peut pas dépasser 50 caractères"],
       trim: true
    },
-
    first_name: {
       type: String,
       required: [true, "Le champ `first_name` est requis"],
@@ -26,7 +25,6 @@ const userSchema = new Schema({
       maxLength: [50, "Le `first_name` ne peut pas dépasser 50 caractères"],
       trim: true
    },
-
    last_name: {
       type: String,
       required: [true, "Le champ `last_name` est requis"],
@@ -34,7 +32,6 @@ const userSchema = new Schema({
       maxLength: [50, "Le `last_name` ne peut pas dépasser 50 caractères"],
       trim: true
    },
-
    email: {
       type: String,
       unique: true,
@@ -42,30 +39,25 @@ const userSchema = new Schema({
       match: [regexCourriel, "Le champ `email` n'est pas un courriel valide"],
       trim: true
    },
-
    password: {
       type: String,
       required: [true, "Le champ `password` est requis"],
       minLength: [6, "Le `password` doit contenir au moins 8 caractères"]
    },
-
    avatar: {
       type: String,
       default: null
    },
-
    is_active: {
       type: Boolean,
       required: [true, "Le champ `is_active` est requis"],
       default: true
    },
-
    is_admin: {
       type: Boolean,
       required: [true, "Le champ `is_admin` est requis"],
       default: false
    }
-
 }, { timestamps: true });
 
 // DONE: Ajouter un hook pour hasher le mot de passe avant de sauvegarder l'utilisateur

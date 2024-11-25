@@ -13,7 +13,7 @@ const reactionSchema = new Schema({
    item_id: {
       type: Schema.Types.ObjectId, ref: "Item",
       required: true
-   },
+   }
 }, { timestamps: true });
 
 

@@ -7,7 +7,6 @@ const itemSchema = new Schema({
       required: [true, "Le champ `title` est requis"],
       maxLength: [100, "Le champ `title` ne doit pas dépasser 100 caractères"]
    },
-
    url: {
       type: String,
       validate: {
@@ -18,13 +17,11 @@ const itemSchema = new Schema({
       },
       default: null
    },
-
    content: {
       type: String,
       default: "",
       trim: true,
    },
-
    latitude: {
       type: Number,
       min: [-90, "La latitude ne peut pas être inférieure à -90"],
@@ -32,7 +29,6 @@ const itemSchema = new Schema({
       // @ts-ignore
       required: function () { return this.longitude !== undefined; } // Nécessaire si longitude est définie
    },
-
    longitude: {
       type: Number,
       min: [-180, "La longitude ne peut pas être inférieure à -180"],
@@ -40,34 +36,28 @@ const itemSchema = new Schema({
       // @ts-ignore
       required: function () { return this.latitude !== undefined; } // Nécessaire si latitude est définie
    },
-
    private: {
       type: Boolean,
       default: true // Privé par défaut
    },
-
    sticky: {
       type: Boolean,
       default: false // Non épinglé par défaut
    },
-
    permalink: {
       type: String,
       unique: true,
       trim: true
    },
-
    tags: [{
       type: Schema.Types.ObjectId,
       ref: "Tag"
    }],
-
    created_by: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Le champ `created_by` est requis pour identifier l'auteur"]
    },
-
 }, { timestamps: true });
 
 // Middleware pour générer automatiquement le `permalink` avant de sauvegarder l'item

@@ -18,4 +18,3 @@ export async function updateUser(req, res, next) {
 // Supprimer un utilisateur par ID
 export async function deleteUser(req, res, next) {
 }
-

@@ -12,11 +12,9 @@ export async function getItems(req, res, next) {
 export async function getItemsByUser(req, res, next) {
 };
 
-
 // Récupère un item spécifique
 export async function getItem(req, res, next) {
 };
-
 
 // Met à jour un item spécifique
 export async function updateItem(req, res, next) {
