@@ -16,7 +16,12 @@ import { isValidationError, ResponseError } from "./utils.mjs";
 dotenvFlow.config();
 const app = express();
 
-const port = process.env.PORT ?? 3000;
+// Extraction des variables d'environnement
+export const ENV = {
+   JWT_SECRET: process.env.JWT_SECRET ?? console.warn("La variable d'environnement JWT_SECRET n'est pas définie, utilisation de la clé 'maphrasesupersecrete'") ?? "maphrasesupersecrete",
+   MONGODB: process.env.MONGODB ?? console.warn("La variable d'environnement MONGODB n'est pas définie, utilisation de la base de données locale 'test'.") ?? "mongodb://localhost:27017/test",
+   PORT: process.env.PORT ?? console.warn("La variable d'environnement PORT n'est pas définie, utilisation du port 3000.") ?? 3000,
+};
 
 app.use(cors()); // Cross-Origin Resource Sharing
 app.use(express.json()); // application/json
@@ -48,14 +53,11 @@ app.use((_req, res) => {
    res.status(404).json(...new ResponseError(404, "Ressource non trouvée").toJSON());
 });
 
-if (process.env.MONGODB != null) {
-   mongooseConnect(process.env.MONGODB)
-      .then(() => {
-         app.listen(port);
-         console.log("Serveur à l'écoute sur : http://localhost:" + port);
-      })
-      .catch((err) => console.log(err));
-} else {
-   console.log("La variable d'environnement MONGODB n'est pas définie.");
-   process.exit(1);
-}
+// Connexion à la base de données
+mongooseConnect(ENV.MONGODB)
+   .then(() => {
+      // Lancement du serveur
+      app.listen(ENV.PORT);
+      console.log("Serveur à l'écoute sur : http://localhost:" + ENV.PORT);
+   })
+   .catch(console.error);
