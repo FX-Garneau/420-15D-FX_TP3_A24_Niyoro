@@ -60,11 +60,13 @@ const userSchema = new Schema({
    }
 }, { timestamps: true });
 
-// DONE: Ajouter un hook pour hasher le mot de passe avant de sauvegarder l'utilisateur
+// DONE: Add a hook to hash the password before saving the user
 userSchema.pre("save", async function (next) {
    if (this.isModified("password"))
       this.password = await bcrypt.hash(this.password, 10);
    next();
 });
+
+// TODO: Add a hook to delete all documents related to the user before deleting the user
 
 export default model("User", userSchema);
