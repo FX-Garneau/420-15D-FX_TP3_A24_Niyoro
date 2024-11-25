@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
 
 /**
  * Expression rationnelle pour valider les adresses courriel (RFC 6531)
@@ -67,6 +68,11 @@ const userSchema = new Schema({
 
 }, { timestamps: true });
 
-// TODO: Ajouter un hook pour hasher le mot de passe avant de sauvegarder l'utilisateur
+// DONE: Ajouter un hook pour hasher le mot de passe avant de sauvegarder l'utilisateur
+userSchema.pre("save", async function (next) {
+   if (this.isModified("password"))
+      this.password = await bcrypt.hash(this.password, 10);
+   next();
+});
 
 export default model("User", userSchema);
