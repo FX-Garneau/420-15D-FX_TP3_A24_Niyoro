@@ -10,14 +10,6 @@ const regexCourriel = new RegExp(
 );
 
 const userSchema = new Schema({
-   username: {
-      type: String,
-      unique: true,
-      required: [true, "Le champ `username` est requis"],
-      minLength: [1, "Le `username` doit contenir au moins 1 caractère"],
-      maxLength: [50, "Le `username` ne peut pas dépasser 50 caractères"],
-      trim: true
-   },
    first_name: {
       type: String,
       required: [true, "Le champ `first_name` est requis"],
@@ -30,6 +22,14 @@ const userSchema = new Schema({
       required: [true, "Le champ `last_name` est requis"],
       minLength: [1, "Le `last_name` doit contenir au moins 1 caractère"],
       maxLength: [50, "Le `last_name` ne peut pas dépasser 50 caractères"],
+      trim: true
+   },
+   username: {
+      type: String,
+      unique: true,
+      required: [true, "Le champ `username` est requis"],
+      minLength: [1, "Le `username` doit contenir au moins 1 caractère"],
+      maxLength: [50, "Le `username` ne peut pas dépasser 50 caractères"],
       trim: true
    },
    email: {
