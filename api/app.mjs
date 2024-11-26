@@ -1,7 +1,7 @@
 "use strict";
 
 import express from "express";
-import mongoose, { connect as mongooseConnect } from "mongoose";
+import { connect as mongooseConnect } from "mongoose";
 import dotenvFlow from "dotenv-flow";
 import cors from "cors";
 
@@ -10,7 +10,8 @@ import itemRoutes from "./routes/item.mjs";
 import tagRoutes from "./routes/tag.mjs";
 import userRoutes from "./routes/user.mjs";
 import reactionRoutes from "./routes/reaction.mjs";
-import { isValidationError, ResponseError } from "./utils.mjs";
+import { errorHandler } from "./middleware/error.mjs";
+import { ResponseError } from "./utils.mjs";
 // import seedRoutes from "./routes/db.mjs";
 
 dotenvFlow.config();
@@ -33,25 +34,11 @@ app.use(tagRoutes);
 app.use(reactionRoutes);
 // app.use(seedRoutes);
 
-/**
- * Gestionnaire d'erreurs
- * @param {any} error L'erreur à gérer
- */
-app.use((error, _req, res, next) => {
-   if (error instanceof ResponseError === false)
-      // Si l'erreur n'est pas une erreur de réponse, on la transforme en erreur de réponse
-      if (isValidationError(error)) error = new ResponseError(422, "Erreur de validation",);
-      else error = new ResponseError(500, "Erreur interne du serveur", error);
-   console.error(error);
-   res.status(error).json({ message: error.message, data: error.data });
-});
+// Routes non trouvées
+app.use(() => { throw new ResponseError(404, "Ressource non trouvée"); });
 
-/**
- * Gestionnaire de 404
- */
-app.use((_req, res) => {
-   res.status(404).json(...new ResponseError(404, "Ressource non trouvée").toJSON());
-});
+// Gestion des erreurs
+app.use(errorHandler);
 
 // Connexion à la base de données
 mongooseConnect(ENV.MONGODB)
