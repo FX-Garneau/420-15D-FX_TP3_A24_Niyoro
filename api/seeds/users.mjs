@@ -1,5 +1,4 @@
 // DONE: Add at least 5 users, including one admin
-
 export default [
    {
       _id: "650dade494237ad07eedc7ee",
