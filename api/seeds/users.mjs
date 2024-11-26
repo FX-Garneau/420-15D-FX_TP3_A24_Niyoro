@@ -1,4 +1,4 @@
-// TODO/seed: Add at least 5 users, including one admin
+// DONE: Add at least 5 users, including one admin
 
 export default [
    {
@@ -31,6 +31,28 @@ export default [
       courriel: "user2@niyoro.ca",
       password: "$2a$10$zVI7XPKsc7D8pAD6RQ4f6O7o5c2TQBy/3tLq7M0./AtKHrFYgcZpa",
       avatar: "https://robohash.org/jeansaisrien",
+      is_active: true,
+      is_admin: false,
+   },
+   {
+      _id: "650dcaf47bc86e471e5c0af7",
+      first_name: "Jeanne",
+      last_name: "Darc",
+      username: "jeannedarc",
+      courriel: "user3@niyoro.ca",
+      password: "$2a$10$zVI7XPKsc7D8pAD6RQ4f6O7o5c2TQBy/3tLq7M0./AtKHrFYgcZpa",
+      avatar: "https://robohash.org/jeannedarc",
+      is_active: true,
+      is_admin: false,
+   },
+   {
+      _id: "650dcaf47bc86e471e5c0af8",
+      first_name: "Marie",
+      last_name: "Curie",
+      username: "mariecurie",
+      courriel: "user4@niyoro.ca",
+      password: "$2a$10$zVI7XPKsc7D8pAD6RQ4f6O7o5c2TQBy/3tLq7M0./AtKHrFYgcZpa",
+      avatar: "https://robohash.org/mariecurie",
       is_active: true,
       is_admin: false,
    }
