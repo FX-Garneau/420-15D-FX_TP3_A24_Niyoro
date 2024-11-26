@@ -17,4 +17,4 @@ const reactionSchema = new Schema({
 }, { timestamps: true });
 
 
-export default model("Reaction", reactionSchema);
+export const Reaction = model("Reaction", reactionSchema);

@@ -8,4 +8,4 @@ const tagSchema = new Schema({
    }
 }, { timestamps: true });
 
-export default model("Tag", tagSchema);
+export const Tag = model("Tag", tagSchema);

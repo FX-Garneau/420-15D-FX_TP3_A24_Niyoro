@@ -75,4 +75,4 @@ itemSchema.pre("save", function (next) {
    next();
 });
 
-export default model("Item", itemSchema);
+export const Item = model("Item", itemSchema);

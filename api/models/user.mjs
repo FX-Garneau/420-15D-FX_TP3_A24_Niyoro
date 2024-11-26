@@ -69,4 +69,4 @@ userSchema.pre("save", async function (next) {
 
 // TODO: Add a hook to delete all documents related to the user before deleting the user
 
-export default model("User", userSchema);
+export const User = model("User", userSchema);
