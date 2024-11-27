@@ -10,7 +10,7 @@ import itemRoutes from "./routes/item.mjs";
 import tagRoutes from "./routes/tag.mjs";
 import userRoutes from "./routes/user.mjs";
 import reactionRoutes from "./routes/reaction.mjs";
-import { errorHandler } from "./middleware/error.mjs";
+import { errorHandler } from "./middleware/errorHandler.mjs";
 import { ResponseError } from "./utils.mjs";
 // import seedRoutes from "./routes/db.mjs";
 

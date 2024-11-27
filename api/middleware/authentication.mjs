@@ -7,11 +7,15 @@ import { User } from "../models/user.mjs";
 /**
  * Middleware d'authentification
  * @param {boolean} isRequired Requiert une authentification
- * @param {boolean} isAdmin Requiert des droits d'administrateur
  * @returns {express.Handler} La fonction middleware
  */
-export function authentication(isRequired, isAdmin = false) {
+export function authentication(isRequired) {
    return async function (req, res, next) {
+      // Annule l'opération si la session est déjà définie
+      if (req.session) {
+         if (isAdmin && !req.user.is_admin)
+            return next(new ResponseError(403, "Vous n'avez pas les droits nécessaires pour accéder à cette ressource"));
+      }
       // Récupère le jeton depuis l'en-tête Authorization de la requête
       const authHeader = req.get('Authorization');
       // Vérifie si l'en-tête Authorization est présent
@@ -19,19 +23,20 @@ export function authentication(isRequired, isAdmin = false) {
          try {
             // Récupére les données associées les ajoute à l'objet de requête pour utilisation ultérieure
             const session = jwt.verify(authHeader.split(' ')[1], ENV.JWT_SECRET);
+            // Vérifie si une session est présente
+            if (isRequired && !session)
+               throw new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource");
+            // TODO: if (session.exp < Date.now() / 1000)
+            // Vérifie si la session est un objet
             if (typeof session === "object") {
                // Store la session dans l'objet de requête
                req.session = session;
                // Obtenir l'utilisateur depuis la base de données
                req.user = await User.findById(req.session.userId);
                // Vérifie si l'utilisateur existe (si requis)
-               if (isRequired && req.user) {
-                  // Vérifie si l'utilisateur est un administrateur (si requis)
-                  if (isAdmin && !req.user.is_admin)
-                     throw new ResponseError(403, "Vous n'avez pas les droits nécessaires pour accéder à cette ressource");
-                  // Passe au middleware suivant
+               if (isRequired && req.user)
                   return next();
-               } else
+               else
                   throw new ResponseError(401, "L'utilisateur associé au jeton d'authentification est introuvable");
             } else
                throw new ResponseError(401, "Le jeton d'authentification est invalide");
@@ -41,4 +46,17 @@ export function authentication(isRequired, isAdmin = false) {
       else if (isRequired)
          throw new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource");
    }
+}
+
+/**
+ * Middleware de vérification des droits d'administrateur
+ * @param {express.Request} req La requête
+ * @param {express.Response} res La réponse
+ * @param {express.NextFunction} next Le prochain middleware
+ */
+export function admin(req, res, next) {
+   next(req.user.is_admin
+      ? undefined
+      : new ResponseError(403, "Vous n'avez pas les droits nécessaires pour accéder à cette ressource")
+   );
 }
