@@ -9,7 +9,7 @@ export default [
       private: false,
       sticky: false,
       created_by: "650dade494237ad07eedc7ee",
-      permalink: null,
+      permalink: "item-public-123e4567-e89b-12d3-a456-426614174000",
       tags: ["650dcaf47bc86e471e5c0af9"]
    },
    {
@@ -21,7 +21,7 @@ export default [
       private: true,
       sticky: false,
       created_by: "650dade494237ad07eedc7ee",
-      permalink: null,
+      permalink: "item-prive-123e4567-e89b-12d3-a456-426614174001",
       tags: ["650dcaf47bc86e471e5c0afa"]
    },
    {
@@ -33,7 +33,7 @@ export default [
       private: false,
       sticky: true,
       created_by: "650dade494237ad07eedc7ee",
-      permalink: null,
+      permalink: "item-epingle-123e4567-e89b-12d3-a456-426614174002",
       tags: ["650dcaf47bc86e471e5c0afb"]
    },
    // User 2 (650dadf594237ad07eedc7f0)
@@ -46,7 +46,7 @@ export default [
       private: false,
       sticky: false,
       created_by: "650dadf594237ad07eedc7f0",
-      permalink: null,
+      permalink: "item-public-123e4567-e89b-12d3-a456-426614174003",
       tags: ["650dcaf47bc86e471e5c0af9"]
    },
    {
@@ -58,7 +58,7 @@ export default [
       private: true,
       sticky: false,
       created_by: "650dadf594237ad07eedc7f0",
-      permalink: null,
+      permalink: "item-prive-123e4567-e89b-12d3-a456-426614174004",
       tags: ["650dcaf47bc86e471e5c0afa"]
    },
    {
@@ -70,7 +70,7 @@ export default [
       private: false,
       sticky: true,
       created_by: "650dadf594237ad07eedc7f0",
-      permalink: null,
+      permalink: "item-epingle-123e4567-e89b-12d3-a456-426614174005",
       tags: ["650dcaf47bc86e471e5c0afb"]
    },
    // User 3 (650dcaf47bc86e471e5c0af6)
@@ -83,7 +83,7 @@ export default [
       private: false,
       sticky: false,
       created_by: "650dcaf47bc86e471e5c0af6",
-      permalink: null,
+      permalink: "item-public-123e4567-e89b-12d3-a456-426614174006",
       tags: ["650dcaf47bc86e471e5c0af9"]
    },
    {
@@ -95,7 +95,7 @@ export default [
       private: true,
       sticky: false,
       created_by: "650dcaf47bc86e471e5c0af6",
-      permalink: null,
+      permalink: "item-prive-123e4567-e89b-12d3-a456-426614174007",
       tags: ["650dcaf47bc86e471e5c0afa"]
    },
    {
@@ -107,7 +107,7 @@ export default [
       private: false,
       sticky: true,
       created_by: "650dcaf47bc86e471e5c0af6",
-      permalink: null,
+      permalink: "item-epingle-123e4567-e89b-12d3-a456-426614174008",
       tags: ["650dcaf47bc86e471e5c0afb"]
    },
    // User 4 (650dcaf47bc86e471e5c0af7)
@@ -120,7 +120,7 @@ export default [
       private: false,
       sticky: false,
       created_by: "650dcaf47bc86e471e5c0af7",
-      permalink: null,
+      permalink: "item-public-123e4567-e89b-12d3-a456-426614174009",
       tags: ["650dcaf47bc86e471e5c0af9"]
    },
    {
@@ -132,7 +132,7 @@ export default [
       private: true,
       sticky: false,
       created_by: "650dcaf47bc86e471e5c0af7",
-      permalink: null,
+      permalink: "item-prive-123e4567-e89b-12d3-a456-426614174010",
       tags: ["650dcaf47bc86e471e5c0afa"]
    },
    {
@@ -144,7 +144,7 @@ export default [
       private: false,
       sticky: true,
       created_by: "650dcaf47bc86e471e5c0af7",
-      permalink: null,
+      permalink: "item-epingle-123e4567-e89b-12d3-a456-426614174011",
       tags: ["650dcaf47bc86e471e5c0afb"]
    },
    // User 5 (650dcaf47bc86e471e5c0af8)
@@ -157,7 +157,7 @@ export default [
       private: false,
       sticky: false,
       created_by: "650dcaf47bc86e471e5c0af8",
-      permalink: null,
+      permalink: "item-public-123e4567-e89b-12d3-a456-426614174012",
       tags: ["650dcaf47bc86e471e5c0af9"]
    },
    {
@@ -169,7 +169,7 @@ export default [
       private: true,
       sticky: false,
       created_by: "650dcaf47bc86e471e5c0af8",
-      permalink: null,
+      permalink: "item-prive-123e4567-e89b-12d3-a456-426614174013",
       tags: ["650dcaf47bc86e471e5c0afa"]
    },
    {
@@ -181,7 +181,7 @@ export default [
       private: false,
       sticky: true,
       created_by: "650dcaf47bc86e471e5c0af8",
-      permalink: null,
+      permalink: "item-epingle-123e4567-e89b-12d3-a456-426614174014",
       tags: ["650dcaf47bc86e471e5c0afb"]
    }
 ]
