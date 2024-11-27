@@ -11,7 +11,7 @@ const itemSchema = new Schema({
       type: String,
       validate: {
          validator: function (v) {
-            return /^(http|https):\/\/[^ "]+$/.test(v);
+            return !v || /^(http|https):\/\/[^ "]+$/.test(v);
          },
          message: props => `${props.value} n'est pas une URL valide!`
       },
