@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const reactionSchema = new Schema({
    type: {
       type: String,
-      enum: ["J'aime", "Informatif", "Drôle", "Inapproprié"],
+      enum: [1, 2, 3, 4],
       required: true
    },
    user_id: {
