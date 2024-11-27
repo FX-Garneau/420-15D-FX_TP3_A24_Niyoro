@@ -12,6 +12,7 @@ import userRoutes from "./routes/user.mjs";
 import reactionRoutes from "./routes/reaction.mjs";
 import { errorHandler } from "./middleware/errorHandler.mjs";
 import { ResponseError } from "./utils.mjs";
+import { authentication } from "./middleware/authentication.mjs";
 // import seedRoutes from "./routes/db.mjs";
 
 dotenvFlow.config();
@@ -28,10 +29,10 @@ app.use(cors()); // Cross-Origin Resource Sharing
 app.use(express.json()); // application/json
 
 app.use("/auth", authRoutes);
-app.use(userRoutes);
-app.use(itemRoutes);
-app.use(tagRoutes);
-app.use(reactionRoutes);
+app.use(authentication(true), userRoutes);
+app.use(authentication(true), itemRoutes);
+app.use(authentication(true), tagRoutes);
+app.use(authentication(true), reactionRoutes);
 // app.use(seedRoutes);
 
 // Routes non trouvées
