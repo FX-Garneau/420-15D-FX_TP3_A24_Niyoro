@@ -1,5 +1,6 @@
-import Item from '../models/item.mjs';
-import Reaction from "../models/reaction.mjs";
+import express from 'express';
+import { Item } from '../models/item.mjs';
+import { Reaction } from "../models/reaction.mjs";
 
 // Crée un nouvel item
 // TODO/JsDoc: Document this function

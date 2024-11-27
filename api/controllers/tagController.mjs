@@ -1,5 +1,5 @@
-import Tag from "../models/tag.mjs";
-import Item from "../models/item.mjs";
+import { Tag } from "../models/tag.mjs";
+import { Item } from "../models/item.mjs";
 
 // Crée un nouveau tag
 // TODO/JsDoc: Document this function

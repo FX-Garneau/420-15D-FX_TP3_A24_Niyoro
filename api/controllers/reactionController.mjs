@@ -1,4 +1,4 @@
-import Reaction from "../models/reaction.mjs";
+import { Reaction } from "../models/reaction.mjs";
 
 // Récupère toutes les réactions associées à un item spécifique
 // TODO/JsDoc: Document this function

@@ -9,7 +9,7 @@ import { User } from "../models/user.mjs";
  * @param {boolean} isRequired Requiert une authentification
  * @returns {express.Handler} La fonction middleware
  */
-export function authentication(isRequired) {
+export function isAuth(isRequired) {
    return async function (req, res, next) {
       // Annule l'opération si la session est déjà définie
       if (req.session && req.user) return next();
@@ -51,7 +51,7 @@ export function authentication(isRequired) {
  * @param {express.Response} res La réponse
  * @param {express.NextFunction} next Le prochain middleware
  */
-export function admin(req, res, next) {
+export function isAdmin(req, res, next) {
    next(req.user?.is_admin
       ? undefined
       : new ResponseError(403, "Vous n'avez pas les droits nécessaires pour accéder à cette ressource")

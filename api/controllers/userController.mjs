@@ -1,6 +1,6 @@
-import User from "../models/user.mjs";
-import Item from "../models/item.mjs";
-import Reaction from "../models/reaction.mjs";
+import { User } from "../models/user.mjs";
+import { Item } from "../models/item.mjs";
+import { Reaction } from "../models/reaction.mjs";
 import mongoose from "mongoose";
 
 // Récupère les utilisateurs

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getUser, getUsers, updateUser, deleteUser } from "../controllers/userController.mjs";
+import { isAdmin } from "../middleware/authentication.mjs";
 
 const router = Router();
 
@@ -15,9 +16,9 @@ router.delete("/me", deleteUser);
 // Obtenir les informations d'un utilisateur spécifique
 router.get("/users/:id", getUser);
 // Mise à jour d'un utilisateur spécifique (réservée aux administrateurs)
-router.put("/users/:id", updateUser);
+router.put("/users/:id", isAdmin, updateUser);
 // Suppression d'un utilisateur spécifique (réservée aux administrateurs)
-router.delete("/users/:id", deleteUser);
+router.delete("/users/:id", isAdmin, deleteUser);
 
 // Route pour lister tous les utilisateurs
 router.get("/users", getUsers);

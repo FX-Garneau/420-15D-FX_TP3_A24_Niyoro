@@ -1,8 +1,8 @@
 import express from "express";
-import User from "../models/user.mjs";
-import Item from "../models/item.mjs";
-import Tag from "../models/tag.mjs";
-import Reaction from "../models/reaction.mjs";
+import { User } from "../models/user.mjs";
+import { Item } from "../models/item.mjs";
+import { Tag } from "../models/tag.mjs";
+import { Reaction } from "../models/reaction.mjs";
 import items from "../seeds/items.mjs";
 import reactions from "../seeds/reactions.mjs";
 import tags from "../seeds/tags.mjs";
