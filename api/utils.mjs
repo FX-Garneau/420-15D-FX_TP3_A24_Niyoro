@@ -21,6 +21,7 @@ export function getValidationErrorMessage(err) {
 export class ResponseError extends Error {
    constructor(statusCode = 500, message, data) {
       super(message);
+      this.name = this.constructor.name;
       this.statusCode = statusCode;
       this.data = data;
    }

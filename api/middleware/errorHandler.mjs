@@ -37,11 +37,9 @@ export async function errorHandler(caught, req, res, next) {
       // Envoi de l'erreur au client
       res.status(error.statusCode).json(error.toJSON());
       // Affichage de l'erreur dans la console
-      console.error(error);
+      console.error(`${error.name}: ${error.message}`);
    } else {
       // Affichage de l'erreur dans la console
       console.warn("Erreur non gérée : ", caught);
    }
-   // Passe à l'erreur suivante
-   next(caught);
 }
