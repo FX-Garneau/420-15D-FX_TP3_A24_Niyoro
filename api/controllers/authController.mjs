@@ -21,7 +21,7 @@ export async function login(req, res, next) {
    const user = await User.findOne({ email });
    if (!user) return next(new ResponseError(404, "Utilisateur non trouvé."));
    // Vérification du mot de passe
-   if (await bcrypt.compare(password, user.password)) return next(new ResponseError(401, "Mot de passe incorrect."));
+   if (!await bcrypt.compare(password, user.password)) return next(new ResponseError(401, "Mot de passe incorrect."));
    // Génération du token
    const token = jwt.sign({ userId: user.id }, ENV.JWT_SECRET, { expiresIn: "24h" });
    // Envoi de la réponse
