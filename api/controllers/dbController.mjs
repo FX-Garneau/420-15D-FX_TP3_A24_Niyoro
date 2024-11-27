@@ -33,13 +33,13 @@ export async function seed(req, res, next) {
       ];
 
       if (tagsInsert.length > 0)
-         result.comments = tagsInsert;
+         result.tags = tagsInsert;
 
       if (reactionsInsert.length > 0)
          result.reactions = reactionsInsert;
 
       if (itemsInsert.length > 0)
-         result.boycotts = itemsInsert;
+         result.items = itemsInsert;
 
       if (usersInsert.length > 0)
          result.users = usersInsert;
