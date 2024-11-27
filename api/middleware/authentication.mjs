@@ -22,7 +22,7 @@ export function isAuth(isRequired) {
             const session = jwt.verify(authHeader.split(' ')[1], ENV.JWT_SECRET);
             // Vérifie si une session est présente
             if (isRequired && !session)
-               throw new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource");
+               return next(new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource"));
             // TODO: if (session.exp < Date.now() / 1000)
             // Vérifie si la session est un objet
             if (typeof session === "object" && session.userId) {
@@ -34,14 +34,14 @@ export function isAuth(isRequired) {
                if (isRequired && req.user)
                   return next();
                else
-                  throw new ResponseError(401, "L'utilisateur associé au jeton d'authentification est introuvable");
+                  return next(new ResponseError(401, "L'utilisateur associé au jeton d'authentification est introuvable"));
             } else
-               throw new ResponseError(401, "Le jeton d'authentification est invalide");
+               return next(new ResponseError(401, "Le jeton d'authentification est invalide"));
          } catch (error) {
             return next(error);
          }
       else if (isRequired)
-         throw new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource");
+         return next(new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource"));
    }
 }
 

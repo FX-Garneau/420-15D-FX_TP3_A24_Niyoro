@@ -38,7 +38,7 @@ app.use(isAuth(true), tagRoutes);
 app.use(isAuth(true), reactionRoutes);
 
 // Routes non trouvées
-app.use(() => { throw new ResponseError(404, "Ressource non trouvée"); });
+app.use((req, res, next) => { return next(new ResponseError(404, "Ressource non trouvée")); });
 
 // Gestion des erreurs
 app.use(errorHandler);

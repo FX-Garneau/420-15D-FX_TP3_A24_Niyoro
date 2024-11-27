@@ -11,7 +11,7 @@ import { ResponseError } from '../utils.mjs';
 export function prefetch(model, param) {
    return async (req, res, next) => {
       req.resource = await model.findById(req.params[param]);
-      if (!req.resource) throw new ResponseError(404, "Ressource non trouvée");
+      if (!req.resource) return next(new ResponseError(404, "Ressource non trouvée"));
    };
 }
 
@@ -23,6 +23,6 @@ export function prefetch(model, param) {
 export function isOwner(field) {
    return (req, res, next) => {
       if (req.user?.id !== req.resource?.[field])
-         throw new ResponseError(403, "Vous n'êtes pas autorisé à accéder à cette ressource");
+         return next(new ResponseError(403, "Vous n'êtes pas autorisé à accéder à cette ressource"));
    };
 }
