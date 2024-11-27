@@ -28,13 +28,14 @@ export const ENV = {
 app.use(cors()); // Cross-Origin Resource Sharing
 app.use(express.json()); // application/json
 
+if (process.env.NODE_ENV !== "production")
+   app.use(seedRoutes);
+
 app.use("/auth", authRoutes);
 app.use(isAuth(true), userRoutes);
 app.use(isAuth(true), itemRoutes);
 app.use(isAuth(true), tagRoutes);
 app.use(isAuth(true), reactionRoutes);
-if (process.env.NODE_ENV !== "production")
-   app.use(seedRoutes);
 
 // Routes non trouvées
 app.use(() => { throw new ResponseError(404, "Ressource non trouvée"); });
