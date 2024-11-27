@@ -3,5 +3,10 @@
       "*/**.js",
       "*/**.mjs",
       "*/**.d.ts"
-   ]
+   ],
+   "compilerOptions": {
+      "strict": true,
+      "strictNullChecks": true,
+      "noImplicitAny": true
+   }
 }
