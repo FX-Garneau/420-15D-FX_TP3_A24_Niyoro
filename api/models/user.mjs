@@ -70,7 +70,23 @@ const userSchema = new Schema({
    }
 });
 
+userSchema.pre("validate", async function () {
+   // Verify if the username is unique
+   if (this.isModified("username") || this.isNew) {
+      console.log("checking username");
+      if (await User.exists({ username: this.username }))
+         this.invalidate("username", "Le nom d'utilisateur est déjà utilisé.");
+   }
+   // Verify if the email is unique
+   if (this.isModified("email") || this.isNew) {
+      console.log("checking email");
+      if (await User.exists({ email: this.email }))
+         this.invalidate("email", "Le courriel est déjà utilisé.");
+   }
+});
+
 userSchema.pre("save", async function (next) {
+   // Hash the password before saving the user
    if (this.isModified("password"))
       this.password = await bcrypt.hash(this.password, 10);
    next();
