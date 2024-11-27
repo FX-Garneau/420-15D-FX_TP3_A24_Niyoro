@@ -45,6 +45,7 @@ app.use(errorHandler);
 // Connexion à la base de données
 mongooseConnect(ENV.MONGODB)
    .then(() => {
+      console.log("Connexion à la base de données réussie.");
       // Lancement du serveur
       app.listen(ENV.PORT);
       console.log("Serveur à l'écoute sur : http://localhost:" + ENV.PORT);
