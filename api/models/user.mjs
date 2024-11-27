@@ -58,7 +58,16 @@ const userSchema = new Schema({
       required: [true, "Le champ `is_admin` est requis"],
       default: false
    }
-}, { timestamps: true });
+}, {
+   timestamps: true,
+   methods: {
+      toJSON() {
+         const user = this.toObject();
+         delete user.password;
+         return user;
+      }
+   }
+});
 
 userSchema.pre("save", async function (next) {
    if (this.isModified("password"))
