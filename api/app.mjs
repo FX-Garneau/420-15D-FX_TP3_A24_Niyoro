@@ -13,7 +13,7 @@ import reactionRoutes from "./routes/reaction.mjs";
 import { errorHandler } from "./middleware/errorHandler.mjs";
 import { ResponseError } from "./utils.mjs";
 import { isAuth } from "./middleware/authentication.mjs";
-// import seedRoutes from "./routes/db.mjs";
+import seedRoutes from "./routes/db.mjs";
 
 dotenvFlow.config();
 const app = express();
@@ -33,7 +33,8 @@ app.use(isAuth(true), userRoutes);
 app.use(isAuth(true), itemRoutes);
 app.use(isAuth(true), tagRoutes);
 app.use(isAuth(true), reactionRoutes);
-// app.use(seedRoutes);
+if (process.env.NODE_ENV !== "production")
+   app.use(seedRoutes);
 
 // Routes non trouvées
 app.use(() => { throw new ResponseError(404, "Ressource non trouvée"); });
