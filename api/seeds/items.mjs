@@ -1,4 +1,3 @@
-// DONE: Add at least 3 items per user, including private, public, and pinned items
 export default [
    // User 1 (650dade494237ad07eedc7ee)
    {

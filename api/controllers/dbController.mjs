@@ -1,3 +1,4 @@
+import express from "express";
 import User from "../models/user.mjs";
 import Item from "../models/item.mjs";
 import Tag from "../models/tag.mjs";
@@ -7,7 +8,12 @@ import reactions from "../seeds/reactions.mjs";
 import tags from "../seeds/tags.mjs";
 import users from "../seeds/users.mjs";
 
-// TODO/JsDoc: Document this function
+/**
+ * Seed the database with the items, reactions, tags, and users from the seeds directory.
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
+ */
 export async function seed(req, res, next) {
    const result = {};
 

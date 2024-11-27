@@ -2,7 +2,6 @@ import * as jwt from 'jsonwebtoken';
 import { HydratedDocumentFromSchema } from 'mongoose';
 import { User } from './models/user.mjs';
 
-// DONE: Add a global declaration file to extend the Express Request interface to include a session object and a user object.
 declare global {
    declare namespace Express {
       interface Request {

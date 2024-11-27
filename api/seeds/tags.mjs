@@ -1,4 +1,3 @@
-// DONE: Add 0-3 tags
 export default [
    {
       _id: "650dcaf47bc86e471e5c0af9",
