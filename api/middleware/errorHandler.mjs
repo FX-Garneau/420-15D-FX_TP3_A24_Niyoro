@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { getValidationErrorMessage, ResponseError } from '../utils.mjs';
 
@@ -19,6 +19,10 @@ export async function errorHandler(caught, req, res, next) {
          : new ResponseError(500, "Erreur interne du serveur");
       // Gestion d'erreurs spécifiques
       switch (true) {
+         // MongoDB
+         case caught instanceof mongo.MongoServerError && caught.code === 11000:
+            error = new ResponseError(409, "Un champ unique est déjà utilisé.");
+            break;
          // Mongoose
          case caught instanceof mongoose.Error.ValidationError:
             error = new ResponseError(422, getValidationErrorMessage(caught));

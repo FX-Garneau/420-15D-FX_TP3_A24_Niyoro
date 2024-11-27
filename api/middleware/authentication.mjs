@@ -25,7 +25,7 @@ export function isAuth(isRequired) {
                throw new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource");
             // TODO: if (session.exp < Date.now() / 1000)
             // Vérifie si la session est un objet
-            if (typeof session === "object") {
+            if (typeof session === "object" && session.userId) {
                // Store la session dans l'objet de requête
                req.session = session;
                // Obtenir l'utilisateur depuis la base de données
