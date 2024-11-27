@@ -12,10 +12,7 @@ import { User } from "../models/user.mjs";
 export function authentication(isRequired) {
    return async function (req, res, next) {
       // Annule l'opération si la session est déjà définie
-      if (req.session) {
-         if (isAdmin && !req.user.is_admin)
-            return next(new ResponseError(403, "Vous n'avez pas les droits nécessaires pour accéder à cette ressource"));
-      }
+      if (req.session && req.user) return next();
       // Récupère le jeton depuis l'en-tête Authorization de la requête
       const authHeader = req.get('Authorization');
       // Vérifie si l'en-tête Authorization est présent
@@ -55,7 +52,7 @@ export function authentication(isRequired) {
  * @param {express.NextFunction} next Le prochain middleware
  */
 export function admin(req, res, next) {
-   next(req.user.is_admin
+   next(req.user?.is_admin
       ? undefined
       : new ResponseError(403, "Vous n'avez pas les droits nécessaires pour accéder à cette ressource")
    );
