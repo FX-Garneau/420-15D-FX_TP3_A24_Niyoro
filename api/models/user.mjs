@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 /**
  * Expression rationnelle pour valider les adresses courriel (RFC 6531)
@@ -63,6 +63,7 @@ const userSchema = new Schema({
    methods: {
       toJSON() {
          const user = this.toObject();
+         // @ts-ignore
          delete user.password;
          return user;
       }
