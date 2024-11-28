@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { ENV } from "../app.mjs";
 import { ResponseError } from "../utils.mjs";
 import { User } from "../models/user.mjs";
+import mongoose from "mongoose";
 
 /**
  * Middleware d'authentification
@@ -25,7 +26,7 @@ export function isAuth(isRequired) {
                return next(new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource"));
             // TODO: if (session.exp < Date.now() / 1000)
             // Vérifie si la session est un objet
-            if (typeof session === "object" && session.userId) {
+            if (typeof session === "object" && session.userId && mongoose.isValidObjectId(session.userId)) {
                // Store la session dans l'objet de requête
                req.session = session;
                // Obtenir l'utilisateur depuis la base de données

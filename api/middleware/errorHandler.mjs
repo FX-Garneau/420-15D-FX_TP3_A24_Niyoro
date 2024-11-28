@@ -19,6 +19,9 @@ export async function errorHandler(caught, req, res, next) {
          : new ResponseError(500, "Erreur interne du serveur");
       // Gestion d'erreurs spécifiques
       switch (true) {
+         // Express.json
+         case caught instanceof SyntaxError && caught["status"] === 400 && "body" in caught:
+            error = new ResponseError(400, "Le corps de la requête est invalide.");
          // MongoDB
          case caught instanceof mongo.MongoServerError && caught.code === 11000:
             error = new ResponseError(409, "Un champ unique est déjà utilisé.");
@@ -37,7 +40,9 @@ export async function errorHandler(caught, req, res, next) {
       // Envoi de l'erreur au client
       res.status(error.statusCode).json(error.toJSON());
       // Affichage de l'erreur dans la console
-      console.error(`${error.name}: ${error.message}`);
+      error.statusCode !== 500
+         ? console.error(`${error.name}: ${error.message}`)
+         : console.error(caught);
    } else {
       // Affichage de l'erreur dans la console
       console.warn("Erreur non gérée : ", caught);
