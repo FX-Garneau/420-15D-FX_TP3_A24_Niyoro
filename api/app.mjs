@@ -12,7 +12,6 @@ import userRoutes from "./routes/user.mjs";
 import reactionRoutes from "./routes/reaction.mjs";
 import { errorHandler } from "./middleware/errorHandler.mjs";
 import { ResponseError } from "./utils.mjs";
-import { isAuth } from "./middleware/authentication.mjs";
 import seedRoutes from "./routes/db.mjs";
 
 dotenvFlow.config();

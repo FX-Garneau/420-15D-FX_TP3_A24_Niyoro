@@ -62,10 +62,15 @@ const userSchema = new Schema({
    timestamps: true,
    methods: {
       toJSON() {
-         const user = this.toObject();
-         // @ts-ignore
-         delete user.password;
-         return user;
+         return {
+            ...this.toObject(),
+            password: undefined,
+            is_active: undefined,
+            is_admin: undefined,
+            createdAt: undefined,
+            updatedAt: undefined,
+            __v: undefined
+         };
       }
    }
 });
