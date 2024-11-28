@@ -38,7 +38,7 @@ app.use(tagRoutes);
 app.use(reactionRoutes);
 
 // Routes non trouvées
-app.all("", (req, res, next) => {
+app.all("*", (req, res, next) => {
    return next(new ResponseError(404, "Ressource non trouvée"));
 });
 

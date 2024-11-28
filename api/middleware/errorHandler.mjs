@@ -21,10 +21,10 @@ export async function errorHandler(caught, req, res, next) {
       switch (true) {
          // Express.json
          case caught instanceof SyntaxError && caught["status"] === 400 && "body" in caught:
-            error = new ResponseError(400, "Le corps de la requête est invalide.");
+            error = new ResponseError(400, "Le corps de la requête est invalide");
          // MongoDB
          case caught instanceof mongo.MongoServerError && caught.code === 11000:
-            error = new ResponseError(409, "Un champ unique est déjà utilisé.");
+            error = new ResponseError(409, "Un champ unique est déjà utilisé");
             break;
          // Mongoose
          case caught instanceof mongoose.Error.ValidationError:
