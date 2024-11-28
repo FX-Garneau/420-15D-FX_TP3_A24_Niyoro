@@ -94,6 +94,9 @@ userSchema.pre("save", async function (next) {
    // Hash the password before saving the user
    if (this.isModified("password"))
       this.password = await bcrypt.hash(this.password, 10);
+   // Set the avatar URL before saving the user
+   if (this.isModified("username"))
+      this.avatar = "https://robohash.org/" + this.username;
    next();
 });
 
