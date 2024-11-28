@@ -11,16 +11,26 @@ export async function getUsers(req, res, next) {
    // TODO: Implement getUsers function
 }
 
-// Obtenir un utilisateur par ID
 /**
- * Obtiens les informations de l'utilisateur connecté
- * @param {express.Request} req 
+ * Obtiens les informations de l'utilisateur connecté ou d'un utilisateur spécifique par ID
+ * @param {express.Request<{id?:string}>} req 
  * @param {express.Response} res 
  * @param {express.NextFunction} next 
  */
 export async function getUser(req, res, next) {
-   if (req.user) res.json(req.user.toJSON());
-   else next(new ResponseError(401));
+   if (req.params.id) {
+      // Valider l'ID de l'utilisateur
+      if (!mongoose.isValidObjectId(req.params.id)) return next(new ResponseError(400));
+      // Obtenir les informations de l'utilisateur par ID
+      else User.findById(req.params.id).then(user => {
+         if (user) res.json(user.toJSON());
+         else next(new ResponseError(404, "L'utilisateur n'existe pas"));
+      }).catch(next);
+   } else {
+      // Obtenir les informations de l'utilisateur connecté
+      if (req.user) res.json(req.user.toJSON());
+      else next(new ResponseError(401));
+   }
 }
 
 // Mettre à jour un utilisateur par ID
