@@ -27,6 +27,9 @@ export async function errorHandler(caught, req, res, next) {
             error = new ResponseError(409, "Un champ unique est déjà utilisé");
             break;
          // Mongoose
+         case caught instanceof mongoose.Error.CastError:
+            error = new ResponseError(400, "ID de ressource invalide : " + caught.value);
+            break;
          case caught instanceof mongoose.Error.ValidationError:
             error = new ResponseError(422, getValidationErrorMessage(caught));
             break;
