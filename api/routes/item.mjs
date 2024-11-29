@@ -16,7 +16,7 @@ router.get("/me/items", isAuth(true), getItemsByUser);
 // Crée un item
 router.post("/items", isAuth(true), createItem);
 // Affiche un item spécifique
-router.get("/items/:id_item", isAuth(true), prefetch(Item, "id_item"), getItem);
+router.get("/items/:id_item", isAuth(true), prefetch(Item, "id_item"), isOwner("created_by", i => i?.["private"]), getItem);
 // Supprime un item spécifique (seulement pour le propriétaire)
 router.delete("/items/:id_item", isAuth(true), prefetch(Item, "id_item"), isOwner("created_by"), deleteItem);
 // Met à jour un item spécifique (seulement pour le propriétaire)
