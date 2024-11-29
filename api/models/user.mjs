@@ -65,8 +65,8 @@ const userSchema = new Schema({
          return {
             ...this.toObject(),
             password: undefined,
-            is_active: undefined,
-            is_admin: undefined,
+            // is_active: undefined,
+            // is_admin: undefined,
             createdAt: undefined,
             updatedAt: undefined,
             __v: undefined
