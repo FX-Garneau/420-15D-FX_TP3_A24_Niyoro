@@ -5,7 +5,7 @@ import { ResponseError } from '../utils.mjs';
 /**
  * Middleware pour obtenir une ressource préalablement à l'exécution d'une route
  * @param {typeof mongoose.Model} model Modèle de la ressource
- * @param {string|((req: express.Request) => any)} target Nom du paramètre contenant l'ID de la ressource ou fonction pour obtenir l'ID
+ * @param {string|((req: express.Request) => string)} target Nom du paramètre contenant l'ID de la ressource ou fonction pour obtenir l'ID
  * @returns {express.RequestHandler} Middleware
  */
 export function prefetch(model, target) {
