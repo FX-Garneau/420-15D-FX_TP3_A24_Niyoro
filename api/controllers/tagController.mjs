@@ -1,32 +1,66 @@
+import express from "express";
 import { Tag } from "../models/tag.mjs";
 import { Item } from "../models/item.mjs";
+import { ResponseError } from "../utils.mjs";
 
-// Crée un nouveau tag
-// TODO/JsDoc: Document this function
+/**
+ * Crée un nouveau tag si il n'existe pas déjà
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
 export async function createTag(req, res, next) {
-   // TODO: Implement createTag function
+   req.user
+      ? await Tag.exists({ name: req.body.name.trim() })
+         ? Tag.create({ name: req.body.name.trim() }).then(res.status(201).json, next)
+         : next(new ResponseError(409, "Le tag existe déjà"))
+      : next(new Error);
 };
 
-// Récupère tous les tags
-// TODO/JsDoc: Document this function
+/**
+ * Récupère tous les tags
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
 export async function getAllTags(req, res, next) {
-   // TODO: Implement getAllTags function
+   req.user
+      ? Tag.find({}).then(res.json, next)
+      : next(new Error);
 };
 
-// Récupère un tag spécifique par son identifiant
-// TODO/JsDoc: Document this function
+/**
+ * Récupère un tag spécifique par son identifiant
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
 export async function getTagById(req, res, next) {
-   // TODO: Implement getTagById function
+   req.user && req.resource instanceof Tag
+      ? res.json(req.resource)
+      : next(new Error);
 };
 
-// Met à jour un tag spécifique par son identifiant
-// TODO/JsDoc: Document this function
+/**
+ * Met à jour un tag spécifique par son identifiant
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
 export async function updateTag(req, res, next) {
-   // TODO: Implement updateTag function
+   req.user && req.resource instanceof Tag
+      ? req.resource.updateOne({ name: req.body.name.trim() }).then(res.json, next)
+      : next(new Error);
 };
 
-// Supprime un tag spécifique par son identifiant
-// TODO/JsDoc: Document this function
+/**
+ * Supprime un tag spécifique par son identifiant
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
 export async function deleteTag(req, res, next) {
-   // TODO: Implement deleteTag function
+   req.user && req.resource instanceof Tag
+      ? req.resource.deleteOne().then(res.json, next)
+      : next(new Error);
 };
