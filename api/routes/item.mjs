@@ -12,7 +12,7 @@ router.get("/items", isAuth(true), getItems);
 // Affiche la liste des items publics de l'utilisateur spécifié
 router.get("/users/:id_user/items", isAuth(true), prefetch(User, "id_user"), getItemsByUser);
 // Affiche la liste des items de l'utilisateur connecté
-router.get("/me/items", isAuth(true), prefetch(User, r => r.user?.id), getItemsByUser);
+router.get("/me/items", isAuth(true), getItemsByUser);
 // Crée un item
 router.post("/items", isAuth(true), createItem);
 // Affiche un item spécifique
