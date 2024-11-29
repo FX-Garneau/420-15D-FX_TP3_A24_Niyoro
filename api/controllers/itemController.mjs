@@ -46,7 +46,10 @@ export async function getItems(req, res, next) {
 export async function getItemsByUser(req, res, next) {
    const user = req.resource ?? req.user;
    req.user && user instanceof User
-      ? Item.find({ created_by: user._id }).then(res.json, next)
+      ? Item.find({
+         created_by: user._id,
+         ...(req.user._id === user._id ? {} : { private: false })
+      }).then(res.json, next)
       : next(new Error);
 };
 
