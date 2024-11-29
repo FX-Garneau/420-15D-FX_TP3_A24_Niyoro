@@ -27,11 +27,12 @@ export function prefetch(model, target) {
 /**
  * Middleware pour vérifier si l'utilisateur est propriétaire de la ressource
  * @param {string} field Champ de la ressource contenant l'ID de l'utilisateur
+ * @param {(res: express.Request["resource"]) => boolean} [condition] Condition supplémentaire pour vérifier si l'utilisateur doit être propriétaire
  * @returns {express.RequestHandler} Middleware
  */
-export function isOwner(field) {
+export function isOwner(field, condition) {
    return (req, res, next) => {
-      next(req.user?.id !== req.resource?.[field]
+      next(req.user?.id !== req.resource?.[field] && (condition?.(req.resource) ?? true)
          ? undefined
          : new ResponseError(403, "Vous n'êtes pas autorisé à accéder à cette ressource")
       );

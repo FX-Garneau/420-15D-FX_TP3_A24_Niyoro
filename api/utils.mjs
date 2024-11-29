@@ -10,7 +10,7 @@ export function getValidationErrorMessage(err) {
       ? Object.values(err.errors)
          .map(e => e?.message)
          .filter(v => !!v)
-         .join("\n")
+         .join(" | ")
       : null;
 }
 
