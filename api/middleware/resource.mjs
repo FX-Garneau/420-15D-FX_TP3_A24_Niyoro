@@ -5,12 +5,18 @@ import { ResponseError } from '../utils.mjs';
 /**
  * Middleware pour obtenir une ressource préalablement à l'exécution d'une route
  * @param {typeof mongoose.Model} model Modèle de la ressource
- * @param {string} param Paramètre de la requête contenant l'ID de la ressource
+ * @param {string|((req: express.Request) => any)} target Nom du paramètre contenant l'ID de la ressource ou fonction pour obtenir l'ID
  * @returns {express.RequestHandler} Middleware
  */
-export function prefetch(model, param) {
+export function prefetch(model, target) {
    return async (req, res, next) => {
-      req.resource = await model.findById(req.params[param]);
+      // Obtenir l'ID de la ressource
+      const id = typeof target === "function" ? target(req) : req.params[target];
+      // Vérifier si l'ID est valide
+      if (!mongoose.isValidObjectId(id)) return next(new ResponseError(400, "ID de ressource invalide"));
+      // Rechercher la ressource
+      req.resource = await model.findById(id);
+      // Vérifier si la ressource a été trouvée
       if (!req.resource) return next(new ResponseError(404, "Ressource non trouvée"));
    };
 }
