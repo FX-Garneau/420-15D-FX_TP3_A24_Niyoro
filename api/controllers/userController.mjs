@@ -9,7 +9,9 @@ import { ResponseError } from "../utils.mjs";
  * @param {express.NextFunction} next
  */
 export async function getUsers(req, res, next) {
-   User.find().then(res.json, next);
+   req.user
+      ? User.find().then(res.json, next)
+      : next(new Error);
 }
 
 /**
@@ -19,9 +21,9 @@ export async function getUsers(req, res, next) {
  * @param {express.NextFunction} next
  */
 export async function getUser(req, res, next) {
-   req.resource instanceof User
+   req.user && req.resource instanceof User
       ? res.json(req.resource)
-      : next(new ResponseError(404, "L'utilisateur n'existe pas"));
+      : next(new Error);
 }
 
 /**
@@ -31,7 +33,7 @@ export async function getUser(req, res, next) {
  * @param {express.NextFunction} next
  */
 export async function updateUser(req, res, next) {
-   req.resource instanceof User && req.user
+   req.user && req.resource instanceof User
       ? req.resource.updateOne({
          first_name: req.body.firstName,
          last_name: req.body.lastName,
@@ -39,7 +41,7 @@ export async function updateUser(req, res, next) {
          password: req.body.password,
          avatar: req.body.avatar,
       }, { new: true }).then(res.json, next)
-      : next(new ResponseError(404, "L'utilisateur n'existe pas"));
+      : next(new Error);
 }
 
 /**
@@ -49,7 +51,7 @@ export async function updateUser(req, res, next) {
  * @param {express.NextFunction} next
  */
 export async function deleteUser(req, res, next) {
-   req.resource instanceof User
+   req.user && req.resource instanceof User
       ? req.resource.deleteOne().then(res.json, next)
       : next(new ResponseError(404, "L'utilisateur n'existe pas"));
 }
