@@ -3,6 +3,8 @@ import { Item } from '../models/item.mjs';
 import { Reaction } from "../models/reaction.mjs";
 import { ResponseError } from '../utils.mjs';
 import { User } from '../models/user.mjs';
+import { Tag } from '../models/tag.mjs';
+import mongoose from 'mongoose';
 
 /**
  * Crée un nouvel item
@@ -20,7 +22,13 @@ export async function createItem(req, res, next) {
          private: req.body.private,
          sticky: req.body.sticky,
          created_by: req.user?._id,
-         tags: req.body.tags,
+         tags: Promise.all(
+            req.body.tags?.map?.(async tag =>
+               mongoose.isValidObjectId(tag) ? tag : (
+                  await Tag.findOne({ name: tag }, {}, { upsert: true }).lean()
+               )?._id ?? tag
+            )
+         )
       }).then(res.status(201).json, next)
       : next(new Error);
 };
