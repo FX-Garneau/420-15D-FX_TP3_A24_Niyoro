@@ -17,7 +17,10 @@ export function prefetch(model, target) {
       // Rechercher la ressource
       req.resource = await model.findById(id);
       // Vérifier si la ressource a été trouvée
-      if (!req.resource) return next(new ResponseError(404, "Ressource non trouvée"));
+      next(req.resource
+         ? undefined
+         : new ResponseError(404, "Ressource non trouvée")
+      );
    };
 }
 
@@ -28,7 +31,9 @@ export function prefetch(model, target) {
  */
 export function isOwner(field) {
    return (req, res, next) => {
-      if (req.user?.id !== req.resource?.[field])
-         return next(new ResponseError(403, "Vous n'êtes pas autorisé à accéder à cette ressource"));
+      next(req.user?.id !== req.resource?.[field]
+         ? undefined
+         : new ResponseError(403, "Vous n'êtes pas autorisé à accéder à cette ressource")
+      );
    };
 }
