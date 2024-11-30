@@ -1,6 +1,5 @@
 import express from "express";
 import { Tag } from "../models/tag.mjs";
-import { Item } from "../models/item.mjs";
 import { ResponseError } from "../utils.mjs";
 
 /**
@@ -12,7 +11,7 @@ import { ResponseError } from "../utils.mjs";
 export async function createTag(req, res, next) {
    req.user
       ? await Tag.exists({ name: req.body.name.trim() })
-         ? Tag.create({ name: req.body.name.trim() }).then(res.status(201).json, next)
+         ? Tag.create({ name: req.body.name.trim() }).then(res.json, next)
          : next(new ResponseError(409, "Le tag existe déjà"))
       : next(new Error);
 };
