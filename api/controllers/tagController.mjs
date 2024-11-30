@@ -48,7 +48,7 @@ export async function getTagById(req, res, next) {
  */
 export async function updateTag(req, res, next) {
    req.user && req.resource instanceof Tag
-      ? req.resource.updateOne({ name: req.body.name.trim() }).then(res.json, next)
+      ? req.resource.updateOne({ name: req.body.name.trim() }, { new: true }).then(res.json, next)
       : next(new Error);
 };
 
