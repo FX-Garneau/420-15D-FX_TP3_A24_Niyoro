@@ -29,7 +29,7 @@ export async function createItem(req, res, next) {
                )?._id ?? tag
             )
          )
-      }).then(res.status(201).json, next)
+      }).then(res.status(201).json.bind(res), next)
       : next(new Error);
 };
 
@@ -41,7 +41,7 @@ export async function createItem(req, res, next) {
  */
 export async function getItems(req, res, next) {
    req.user
-      ? Item.find({ private: false }).then(res.json, next)
+      ? Item.find({ private: false }).then(res.json.bind(res), next)
       : next(new Error);
 };
 
@@ -57,7 +57,7 @@ export async function getItemsByUser(req, res, next) {
       ? Item.find({
          created_by: user._id,
          ...(req.user._id === user._id ? {} : { private: false })
-      }).then(res.json, next)
+      }).then(res.json.bind(res), next)
       : next(new Error);
 };
 
@@ -90,7 +90,7 @@ export async function updateItem(req, res, next) {
          sticky: req.body.sticky,
          created_by: req.user._id,
          tags: req.body.tags,
-      }).then(res.json, next)
+      }).then(res.json.bind(res), next)
       : next(new Error);
 };
 
@@ -102,6 +102,6 @@ export async function updateItem(req, res, next) {
  */
 export async function deleteItem(req, res, next) {
    req.user && req.resource instanceof Item
-      ? req.resource.deleteOne().then(res.json, next)
+      ? req.resource.deleteOne().then(res.json.bind(res), next)
       : next(new Error);
 };

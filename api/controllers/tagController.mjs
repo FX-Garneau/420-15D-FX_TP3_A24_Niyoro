@@ -10,9 +10,11 @@ import { ResponseError } from "../utils.mjs";
  */
 export async function createTag(req, res, next) {
    req.user
-      ? await Tag.exists({ name: req.body.name.trim() })
-         ? Tag.create({ name: req.body.name.trim() }).then(res.json, next)
-         : next(new ResponseError(409, "Le tag existe déjà"))
+      ? req.body.name.trim()
+         ? !await Tag.exists({ name: req.body.name.trim() })
+            ? Tag.create({ name: req.body.name.trim() }).then(res.status(201).json.bind(res), next)
+            : next(new ResponseError(409, "Le tag existe déjà : " + req.body.name.trim()))
+         : next(new ResponseError(400, "Le nom du tag est vide"))
       : next(new Error);
 };
 
@@ -24,7 +26,7 @@ export async function createTag(req, res, next) {
  */
 export async function getAllTags(req, res, next) {
    req.user
-      ? Tag.find({}).then(res.json, next)
+      ? Tag.find({}).then(res.json.bind(res), next)
       : next(new Error);
 };
 
@@ -48,7 +50,7 @@ export async function getTagById(req, res, next) {
  */
 export async function updateTag(req, res, next) {
    req.user && req.resource instanceof Tag
-      ? req.resource.updateOne({ name: req.body.name.trim() }, { new: true }).then(res.json, next)
+      ? req.resource.updateOne({ name: req.body.name.trim() }, { new: true }).then(res.json.bind(res), next)
       : next(new Error);
 };
 
@@ -60,6 +62,6 @@ export async function updateTag(req, res, next) {
  */
 export async function deleteTag(req, res, next) {
    req.user && req.resource instanceof Tag
-      ? req.resource.deleteOne().then(res.json, next)
+      ? req.resource.deleteOne().then(res.json.bind(res), next)
       : next(new Error);
 };

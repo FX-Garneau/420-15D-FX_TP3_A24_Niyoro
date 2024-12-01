@@ -10,11 +10,11 @@ const tagSchema = new Schema({
    }
 }, { timestamps: true });
 
-tagSchema.methods.toJSON = function () {
-   return HATEOAS(this.toObject())
-      .addLink(["self", "GET", `/tags/${this._id}`])
-      .addLink(["update", "PUT", `/tags/${this._id}`])
-      .addLink(["delete", "DELETE", `/tags/${this._id}`]);
-}
+// tagSchema.methods.toJSON = function () {
+//    return HATEOAS(this.toObject())
+//       .addLink(["self", "GET", `/tags/${this._id}`])
+//       .addLink(["update", "PUT", `/tags/${this._id}`])
+//       .addLink(["delete", "DELETE", `/tags/${this._id}`]);
+// }
 
 export const Tag = model("Tag", tagSchema);

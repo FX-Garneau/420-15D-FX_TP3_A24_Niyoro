@@ -51,5 +51,9 @@ mongooseConnect(ENV.MONGODB)
       // Lancement du serveur
       app.listen(ENV.PORT);
       console.log("Serveur à l'écoute sur : http://localhost:" + ENV.PORT);
+      if (process.env.NODE_ENV !== "production") {
+         console.log("Mode de développement : les routes de seed sont activées.");
+         fetch("http://localhost:" + ENV.PORT + "/db/seed").catch(console.error);
+      }
    })
    .catch(console.error);

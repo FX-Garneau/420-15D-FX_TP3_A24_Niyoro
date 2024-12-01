@@ -27,7 +27,7 @@ export async function createReaction(req, res, next) {
             type: req.body.type,
             user_id: req.user._id,
             item_id: req.resource.item_id
-         }).then(res.status(201).json, next)
+         }).then(res.status(201).json.bind(res), next)
          : next(new ResponseError(409, "Vous avez déjà réagi à cet item"))
       : next(new Error);
 }
@@ -40,6 +40,6 @@ export async function createReaction(req, res, next) {
  */
 export async function deleteReaction(req, res, next) {
    req.user && req.resource instanceof Reaction
-      ? req.resource.deleteOne().then(res.json, next)
+      ? req.resource.deleteOne().then(res.json.bind(res), next)
       : next(new Error);
 }
