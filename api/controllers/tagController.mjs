@@ -50,7 +50,7 @@ export async function getTagById(req, res, next) {
  */
 export async function updateTag(req, res, next) {
    req.user && req.resource instanceof Tag
-      ? req.resource.updateOne({ name: req.body.name.trim() }, { new: true }).then(res.json.bind(res), next)
+      ? Tag.findByIdAndUpdate(req.resource._id, { name: req.body.name?.trim() }, { new: true }).then(res.json.bind(res), next)
       : next(new Error);
 };
 

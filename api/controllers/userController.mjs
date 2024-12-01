@@ -34,7 +34,7 @@ export async function getUser(req, res, next) {
  */
 export async function updateUser(req, res, next) {
    req.user && req.resource instanceof User
-      ? req.resource.updateOne({
+      ? User.findByIdAndUpdate(req.resource._id, {
          first_name: req.body.firstName,
          last_name: req.body.lastName,
          email: req.body.email,

@@ -15,20 +15,22 @@ import mongoose from 'mongoose';
 export async function createItem(req, res, next) {
    req.user
       ? Item.create({
-         title: req.body.title.trim(),
-         content: req.body.content.trim(),
+         title: req.body.title?.trim(),
+         content: req.body.content?.trim(),
          latitude: req.body.latitude,
          longitude: req.body.longitude,
          private: req.body.private,
          sticky: req.body.sticky,
          created_by: req.user?._id,
-         tags: await Promise.all(
-            req.body.tags?.map?.(async tag =>
-               mongoose.isValidObjectId(tag) ? tag : (
-                  await Tag.findOneAndUpdate({ name: tag }, {}, { new: true, upsert: true })
-               )._id
+         tags: req.body.tags
+            ? await Promise.all(
+               req.body.tags?.map?.(async tag =>
+                  mongoose.isValidObjectId(tag) ? tag : (
+                     await Tag.findOneAndUpdate({ name: tag }, {}, { new: true, upsert: true })
+                  )._id
+               )
             )
-         )
+            : undefined
       }).then(res.status(201).json.bind(res), next)
       : next(new Error);
 };
@@ -81,16 +83,23 @@ export async function getItem(req, res, next) {
  */
 export async function updateItem(req, res, next) {
    req.user && req.resource instanceof Item
-      ? req.resource.updateOne({
-         title: req.body.title.trim(),
-         content: req.body.content.trim(),
-         latitude: req.body.latitude,
-         longitude: req.body.longitude,
-         private: req.body.private,
-         sticky: req.body.sticky,
-         created_by: req.user._id,
-         tags: req.body.tags,
-      }).then(res.json.bind(res), next)
+      ? Item.findByIdAndUpdate(req.resource._id, {
+         title: req.body.title?.trim() ?? req.resource.title,
+         content: req.body.content?.trim() ?? req.resource.content,
+         latitude: req.body.latitude ?? req.resource.latitude,
+         longitude: req.body.longitude ?? req.resource.longitude,
+         private: req.body.private ?? req.resource.private,
+         sticky: req.body.sticky ?? req.resource.sticky,
+         tags: req.body.tags
+            ? await Promise.all(
+               req.body.tags?.map?.(async tag =>
+                  mongoose.isValidObjectId(tag) ? tag : (
+                     await Tag.findOneAndUpdate({ name: tag }, {}, { new: true, upsert: true })
+                  )._id
+               )
+            )
+            : req.resource.tags
+      }, { new: true }).then(res.json.bind(res), next)
       : next(new Error);
 };
 
