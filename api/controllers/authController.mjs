@@ -24,7 +24,6 @@ export async function login(req, res, next) {
    // Génération du token
    const token = jwt.sign({ userId: user.id }, ENV.JWT_SECRET, { expiresIn: "24h" });
    // Envoi de la réponse
-   res.setHeader("X-ID", user.id);
    res.json({ token });
 }
 
@@ -43,11 +42,7 @@ export async function signup(req, res, next) {
       password: req.body?.password?.trim(),
       email: req.body?.email?.trim()?.toLowerCase(),
    }).then(user => {
-      // TODO: Set 'Location' header?
-      // Génération du token
-      const token = jwt.sign({ userId: user.id }, ENV.JWT_SECRET, { expiresIn: "24h" });
       // Envoi de la réponse
-      res.setHeader("X-ID", user.id);
-      res.status(201).json({ token });
+      res.status(201).json(user);
    }).catch(next);
 }
