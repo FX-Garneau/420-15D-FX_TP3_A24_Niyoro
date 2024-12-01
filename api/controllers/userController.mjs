@@ -52,6 +52,6 @@ export async function updateUser(req, res, next) {
  */
 export async function deleteUser(req, res, next) {
    req.user && req.resource instanceof User
-      ? req.resource.deleteOne().then(res.json.bind(res), next)
-      : next(new ResponseError(404, "L'utilisateur n'existe pas"));
+      ? req.resource.deleteOne().then(() => res.json(req.resource), next)
+      : next(new Error);
 }

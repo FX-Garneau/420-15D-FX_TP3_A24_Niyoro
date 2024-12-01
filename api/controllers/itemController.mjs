@@ -102,6 +102,6 @@ export async function updateItem(req, res, next) {
  */
 export async function deleteItem(req, res, next) {
    req.user && req.resource instanceof Item
-      ? req.resource.deleteOne().then(res.json.bind(res), next)
+      ? req.resource.deleteOne().then(() => res.json(req.resource), next)
       : next(new Error);
 };

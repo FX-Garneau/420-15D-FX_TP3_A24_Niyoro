@@ -32,7 +32,7 @@ export function prefetch(model, target) {
  */
 export function isOwner(field, condition) {
    return (req, res, next) => {
-      next(req.user?.id !== req.resource?.[field] && (condition?.(req.resource) ?? true)
+      next(req.user?._id != req.resource?.[field] && (condition?.(req.resource) ?? true)
          ? undefined
          : new ResponseError(403, "Vous n'êtes pas autorisé à accéder à cette ressource")
       );

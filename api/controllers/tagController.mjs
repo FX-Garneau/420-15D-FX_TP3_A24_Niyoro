@@ -62,6 +62,6 @@ export async function updateTag(req, res, next) {
  */
 export async function deleteTag(req, res, next) {
    req.user && req.resource instanceof Tag
-      ? req.resource.deleteOne().then(res.json.bind(res), next)
+      ? req.resource.deleteOne().then(() => res.json(req.resource), next)
       : next(new Error);
 };

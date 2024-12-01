@@ -40,6 +40,6 @@ export async function createReaction(req, res, next) {
  */
 export async function deleteReaction(req, res, next) {
    req.user && req.resource instanceof Reaction
-      ? req.resource.deleteOne().then(res.json.bind(res), next)
+      ? req.resource.deleteOne().then(() => res.json(req.resource), next)
       : next(new Error);
 }
