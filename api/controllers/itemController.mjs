@@ -22,11 +22,11 @@ export async function createItem(req, res, next) {
          private: req.body.private,
          sticky: req.body.sticky,
          created_by: req.user?._id,
-         tags: Promise.all(
+         tags: await Promise.all(
             req.body.tags?.map?.(async tag =>
                mongoose.isValidObjectId(tag) ? tag : (
-                  await Tag.findOne({ name: tag }, {}, { upsert: true }).lean()
-               )?._id ?? tag
+                  await Tag.findOneAndUpdate({ name: tag }, {}, { new: true, upsert: true })
+               )._id
             )
          )
       }).then(res.status(201).json.bind(res), next)
