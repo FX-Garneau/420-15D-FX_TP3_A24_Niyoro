@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-   content: [],
+   content: [
+      './index.html',
+      './src/**/*.{vue,js,ts}'
+   ],
    theme: {
       extend: {},
    },
-   plugins: ['daisyui'],
+   plugins: [
+      require('daisyui')
+   ],
 }
