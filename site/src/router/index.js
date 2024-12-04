@@ -39,7 +39,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-   // TODO: Make /tags route only available if connected user is admin
+   // TODO: Make |tags route only available if connected user is admin
 })
 
 export default router

@@ -24,7 +24,6 @@ export function isAuth(isRequired) {
             // Vérifie si une session est présente
             if (isRequired && !session)
                return next(new ResponseError(401, "Vous devez être authentifié pour accéder à cette ressource"));
-            // TODO: if (session.exp < Date.now() / 1000)
             // Vérifie si la session est un objet
             if (typeof session === "object" && session.userId && mongoose.isValidObjectId(session.userId)) {
                // Store la session dans l'objet de requête
