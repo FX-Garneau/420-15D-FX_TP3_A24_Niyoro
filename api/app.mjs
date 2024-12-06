@@ -24,7 +24,10 @@ export const ENV = {
    PORT: process.env.PORT ?? console.warn("La variable d'environnement PORT n'est pas définie, utilisation du port 3000.") ?? 3000,
 };
 
-app.use(cors()); // Cross-Origin Resource Sharing
+app.use(cors({
+   origin: "*",
+   credentials: true
+})); // Cross-Origin Resource Sharing
 app.use(express.json({ strict: true, })); // application/json
 
 if (process.env.NODE_ENV !== "production")
