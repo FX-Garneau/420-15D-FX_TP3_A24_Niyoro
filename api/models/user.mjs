@@ -42,7 +42,7 @@ const userSchema = new Schema({
    password: {
       type: String,
       required: [true, "Le champ `password` est requis"],
-      minLength: [6, "Le `password` doit contenir au moins 8 caractères"]
+      minLength: [6, "Le `password` doit contenir au moins 6 caractères"]
    },
    avatar: {
       type: String,
