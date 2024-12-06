@@ -36,7 +36,7 @@ const userStore = useUserStore();
                <div class="dropdown dropdown-end dropdown-hover">
                   <div tabindex="0" role="button" class="avatar">
                      <RouterLink to="/profile" class="w-10 h-10">
-                        <img class="rounded-full" src="https://i.pravatar.cc/500?img=32" alt="avatar">
+                        <img class="rounded-full border border-neutral" :src="userStore.account.avatar" alt="avatar">
                      </RouterLink>
                   </div>
                   <NavigationMenu dropdown :routes="['profile']">
