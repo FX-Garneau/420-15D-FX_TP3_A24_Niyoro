@@ -30,7 +30,7 @@ const selectedRoutes = computed(() => {
    <ul class="menu" :class="$props.dropdown ? 'dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow' : ''"
       :tabindex="$props.dropdown ? '0' : ''">
       <li v-for="route in selectedRoutes">
-         <RouterLink v-if="allRoutes.find(r => r.name === route.name)" :to="route.path"
+         <RouterLink v-if="allRoutes.find(r => r.name === route.name)" :to="{ name: route.name }"
             :class="router.currentRoute.value.name === route.name ? 'active' : ''">
             {{ route.meta.title ?? route.name }}
          </RouterLink>
