@@ -1,6 +1,7 @@
 <script setup>
 import Form from '@/components/Form.vue';
 import FormComponent from '@/components/FormComponent.vue';
+import FormErrors from '@/components/FormErrors.vue';
 import router from '@/router/index';
 import { useUserStore } from '@/stores/user';
 import { APIRequest, validationRules } from '@/utils';
@@ -20,7 +21,7 @@ async function loginFormCallback(data, components) {
             router.push({ name: 'home' })
          } else {
             // Display the error message
-            error.value = json?.message?.replace("|", "<br>") ?? 'Une erreur est survenue'
+            error.value = json?.message ?? 'Une erreur est survenue'
          }
       })
       .catch(error => {
@@ -36,7 +37,8 @@ async function loginFormCallback(data, components) {
       <center>
          <h1 class="text-2xl mb-4">Connexion</h1>
       </center>
-      <Form :callback="loginFormCallback">
+      <Form :callback="loginFormCallback" class="*:w-72">
+         <FormErrors :error="error" />
          <FormComponent kind="email" name="email" label="Adresse courriel" required />
          <FormComponent kind="password" name="password" label="Mot de passe" required />
          <button class="btn btn-success font-bold py-2 px-4 rounded-full">Se connecter</button>
@@ -44,9 +46,6 @@ async function loginFormCallback(data, components) {
             Pas de compte?
             <RouterLink :to="{ name: 'signup' }" class="link text-success">Inscription</RouterLink>
          </p>
-         <!-- Error Alert -->
-         <div v-if="error" v-html="error" class="alert text-warning border border-warning bg-warning bg-opacity-15">
-         </div>
       </Form>
    </div>
 </template>
