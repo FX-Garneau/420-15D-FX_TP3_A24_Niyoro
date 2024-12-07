@@ -42,7 +42,9 @@ export async function signup(req, res, next) {
       password: req.body?.password?.trim(),
       email: req.body?.email?.trim()?.toLowerCase(),
    }).then(user => {
+      // Génération du token
+      const token = jwt.sign({ userId: user.id }, ENV.JWT_SECRET, { expiresIn: "24h" });
       // Envoi de la réponse
-      res.status(201).json(user);
+      res.status(201).json({ token });
    }).catch(next);
 }
