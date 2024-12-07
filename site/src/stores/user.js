@@ -25,10 +25,10 @@ export const useUserStore = defineStore('user', () => {
    }
 
    // Login the user
-   function login(authToken) {
+   async function login(authToken) {
       _authToken.value = authToken
       localStorage.setItem('token', authToken)
-      sync()
+      await sync()
    }
 
    // Logout the user

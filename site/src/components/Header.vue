@@ -47,8 +47,8 @@ const userStore = useUserStore();
                </div>
             </template>
             <template v-else>
-               <RouterLink to="/login" class="btn btn-success btn-outline">Connexion</RouterLink>
-               <RouterLink to="/register" class="btn btn-success">Inscription</RouterLink>
+               <RouterLink :to="{ name: 'login' }" class="btn btn-success btn-outline">Connexion</RouterLink>
+               <RouterLink :to="{ name: 'signup' }" class="btn btn-success">Inscription</RouterLink>
             </template>
          </div>
       </div>

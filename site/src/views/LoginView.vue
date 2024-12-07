@@ -3,29 +3,29 @@ import Form from '@/components/Form.vue';
 import FormComponent from '@/components/FormComponent.vue';
 import router from '@/router/index';
 import { useUserStore } from '@/stores/user';
-import { APIRequest } from '@/utils';
+import { APIRequest, validationRules } from '@/utils';
+import { ref } from 'vue';
 
 const userStore = useUserStore()
 
-const regexCourriel = new RegExp(/^(?<localPart>(?<dotString>[0-9a-z!#$%&'*+-\/=?^_`\{|\}~\u{80}-\u{10FFFF}]+(\.[0-9a-z!#$%&'*+-\/=?^_`\{|\}~\u{80}-\u{10FFFF}]+)*)|(?<quotedString>"([\x20-\x21\x23-\x5B\x5D-\x7E\u{80}-\u{10FFFF}]|\\[\x20-\x7E])*"))(?<!.{64,})@(?<domainOrAddressLiteral>(?<addressLiteral>\[((?<IPv4>\d{1,3}(\.\d{1,3}){3})|(?<IPv6Full>IPv6:[0-9a-f]{1,4}(:[0-9a-f]{1,4}){7})|(?<IPv6Comp>IPv6:([0-9a-f]{1,4}(:[0-9a-f]{1,4}){0,5})?::([0-9a-f]{1,4}(:[0-9a-f]{1,4}){0,5})?)|(?<IPv6v4Full>IPv6:[0-9a-f]{1,4}(:[0-9a-f]{1,4}){5}:\d{1,3}(\.\d{1,3}){3})|(?<IPv6v4Comp>IPv6:([0-9a-f]{1,4}(:[0-9a-f]{1,4}){0,3})?::([0-9a-f]{1,4}(:[0-9a-f]{1,4}){0,3}:)?\d{1,3}(\.\d{1,3}){3})|(?<generalAddressLiteral>[a-z0-9-]*[[a-z0-9]:[\x21-\x5A\x5E-\x7E]+))\])|(?<Domain>(?!.{256,})(([0-9a-z\u{80}-\u{10FFFF}]([0-9a-z-\u{80}-\u{10FFFF}]*[0-9a-z\u{80}-\u{10FFFF}])?))(\.([0-9a-z\u{80}-\u{10FFFF}]([0-9a-z-\u{80}-\u{10FFFF}]*[0-9a-z\u{80}-\u{10FFFF}])?))*))$/iu)
-
-const validationRules = {
-   email: [[v => !regexCourriel.test(v), 'Format invalide']],
-   password: [[v => v.trim().length < 6, 'Doit contenir au moins 6 caractères']]
-}
+const error = ref(null)
 
 async function loginFormCallback(data, components) {
    await APIRequest('POST', '/auth/login', data)
       .then(async ({ response, json }) => {
+         error.value = null
          if (response.ok) {
             // Store the token in the user store
-            userStore.login(json.token)
+            await userStore.login(json.token)
             router.push({ name: 'home' })
          } else {
-            console.warn(json)
+            // Display the error message
+            error.value = json?.message?.replace("|", "<br>") ?? 'Une erreur est survenue'
          }
       })
       .catch(error => {
+         // Display the error message
+         error.value = 'Une erreur est survenue'
          console.error(error)
       })
 }
@@ -37,14 +37,16 @@ async function loginFormCallback(data, components) {
          <h1 class="text-2xl mb-4">Connexion</h1>
       </center>
       <Form :callback="loginFormCallback">
-         <FormComponent kind="email" name="email" label="Adresse courriel" required :rules="validationRules.email" />
-         <FormComponent kind="password" name="password" label="Mot de passe" required
-            :rules="validationRules.password" />
-         <button class="btn btn-success font-bold py-2 px-4 rounded-full">Connexion</button>
-         <p>
+         <FormComponent kind="email" name="email" label="Adresse courriel" required />
+         <FormComponent kind="password" name="password" label="Mot de passe" required />
+         <button class="btn btn-success font-bold py-2 px-4 rounded-full">Se connecter</button>
+         <p class="text-center">
             Pas de compte?
-            <RouterLink :to="{ name: 'signup' }" class="link text-success">Se créer un compte</RouterLink>
+            <RouterLink :to="{ name: 'signup' }" class="link text-success">Inscription</RouterLink>
          </p>
+         <!-- Error Alert -->
+         <div v-if="error" v-html="error" class="alert text-warning border border-warning bg-warning bg-opacity-15">
+         </div>
       </Form>
    </div>
 </template>
