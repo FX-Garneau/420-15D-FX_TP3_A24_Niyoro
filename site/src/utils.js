@@ -19,16 +19,13 @@ export function APIRequest(method, route, body) {
          body: JSON.stringify(body)
       }).then(async response => {
          try {
-            const json = await response.json()
             // If the user is authenticated and the server returns a 401 status code, the token is invalid, so we remove it
             if (response.status === 401 && userStore.isAuthenticated) userStore.logout()
-            resolve({ response, json })
+            resolve({ response, json: await response.json() })
          } catch (error) {
             reject({ response, json: null })
          }
-      }).catch((error) => {
-         reject(error)
-      })
+      }, reject)
    })
 }
 
