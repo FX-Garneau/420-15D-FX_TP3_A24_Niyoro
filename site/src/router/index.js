@@ -53,20 +53,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
    const userStore = useUserStore()
    // If the route requires the user to not be authenticated and the user is authenticated
-   if (to.meta.auth === false && userStore.isAuthenticated) {
-      console.log(1)
-      return
-   }
+   if (to.meta.auth === false && userStore.isAuthenticated) return
    // If the route requires authentication and the user is not authenticated
-   if (to.meta.auth === true && !userStore.isAuthenticated) {
-      console.log(2)
-      return next({ name: 'login' })
-   }
+   if (to.meta.auth === true && !userStore.isAuthenticated) return next({ name: 'login' })
    // If the route requires admin rights and the user is not an admin
-   if (to.meta.admin === true && !userStore.account?.admin) {
-      console.log(3)
-      return next({ name: 'home' })
-   }
+   if (to.meta.admin === true && !userStore.account?.is_admin) return next({ name: 'home' })
    // Continue to the route
    next()
 })
