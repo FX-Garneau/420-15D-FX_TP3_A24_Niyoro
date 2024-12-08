@@ -59,8 +59,7 @@ export async function getItemsByUser(req, res, next) {
    req.user && user instanceof User
       ? Item.find({
          created_by: user._id,
-         // ...(req.user._id === user._id ? {} : { private: false })
-         private: false
+         ...(req.user._id === user._id ? {} : { private: false })
       }).then(res.json.bind(res), next)
       : next(new Error);
 };

@@ -3,6 +3,7 @@ export default [
    {
       _id: "650dcaf47bc86e471e5c0afc",
       title: "Item public",
+      url: "https://example.com",
       content: "Ceci est un item public",
       latitude: 45.5017,
       longitude: -73.5673,
