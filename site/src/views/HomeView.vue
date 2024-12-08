@@ -17,11 +17,16 @@ const itemsStore = useItemsStore()
 const { items } = storeToRefs(itemsStore)
 
 // Filtrer les items visibles
-const visibleItems = computed(() =>
-   onlyMine.value && userStore.account != null
+const visibleItems = computed(() => {
+   var _items = onlyMine.value && userStore.account != null
       ? items.value.filter(item => item.created_by === userStore.account?._id)
       : items.value.filter(item => item.private === false)
-)
+   // Trier les items par date de création
+   _items.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+   // Positionner les items épinglés en premier
+   _items.sort((a, b) => b.sticky - a.sticky)
+   return _items
+})
 
 // Récupérer les items et les tags
 const refreshing = ref(false)
