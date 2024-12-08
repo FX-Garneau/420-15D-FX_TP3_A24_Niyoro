@@ -12,8 +12,8 @@ export const useItemsStore = defineStore('items', () => {
          APIRequest('GET', route, body).then(data => {
             if (data.response.ok)
                Array.isArray(data.json)
-                  ? data.json.forEach(item => itemMap.value.set(item.id, item))
-                  : itemMap.value.set(data.json.id, data.json)
+                  ? data.json.forEach(item => itemMap.value.set(item._id, item))
+                  : itemMap.value.set(data.json._id, data.json)
             resolve(data)
          }, reject)
       })

@@ -12,8 +12,8 @@ export const useTagsStore = defineStore('tags', () => {
          APIRequest('GET', route).then(data => {
             if (data.response.ok)
                Array.isArray(data.json)
-                  ? data.json.forEach(item => tagMap.value.set(item.id, item))
-                  : tagMap.value.set(data.json.id, data.json)
+                  ? data.json.forEach(item => tagMap.value.set(item._id, item))
+                  : tagMap.value.set(data.json._id, data.json)
             resolve(data)
          }, reject)
       })
@@ -23,7 +23,7 @@ export const useTagsStore = defineStore('tags', () => {
    const syncTag = (tagId) => fetchAndSync(`/tags/${tagId}`)
 
    function namesToIds(names, keepInvalid = false) {
-      return names.map(name => tags.value.find(tag => tag.name === name)?.id ?? (keepInvalid ? name : null)).filter(id => id !== null)
+      return names.map(name => tags.value.find(tag => tag.name === name)?._id ?? (keepInvalid ? name : null)).filter(id => id !== null)
    }
 
    function idsToNames(ids, keepInvalid = false) {
