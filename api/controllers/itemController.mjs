@@ -42,9 +42,10 @@ export async function createItem(req, res, next) {
  * @param {express.NextFunction} next
  */
 export async function getItems(req, res, next) {
-   req.user
-      ? Item.find({ private: false }).then(res.json.bind(res), next)
-      : next(new Error);
+   // req.user
+   //    ? Item.find({ private: false }).then(res.json.bind(res), next)
+   //    : next(new Error);
+   Item.find({ private: false }).then(res.json.bind(res), next);
 };
 
 /**

@@ -8,7 +8,8 @@ import { User } from "../models/user.mjs";
 const router = Router();
 
 // Affiche la liste des items publics de tous les utilisateurs
-router.get("/items", isAuth(true), getItems);
+// router.get("/items", isAuth(true), getItems);
+router.get("/items", getItems);
 // Affiche la liste des items publics de l'utilisateur spécifié
 router.get("/users/:id_user/items", isAuth(true), prefetch(User, "id_user"), getItemsByUser);
 // Affiche la liste des items de l'utilisateur connecté
