@@ -1,31 +1,31 @@
-import { ref, readonly, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { APIRequest } from '@/utils'
 
 export const useItemsStore = defineStore('items', () => {
    // The last items fetched
-   const items = ref(new Map())
+   const itemMap = ref(new Map())
+   const items = computed(() => [...itemMap.value.values()])
 
-   function saveItemToCache(item) {
-      items.value.set(item.id, item)
-   }
-
-   function fetchAndSyncItems(route, body) {
+   function fetchAndSync(route, body) {
       return new Promise((resolve, reject) => {
          APIRequest('GET', route, body).then(data => {
-            if (data.response.ok) data.json.forEach(item => saveItemToCache(item))
+            if (data.response.ok)
+               Array.isArray(data.json)
+                  ? data.json.forEach(item => itemMap.value.set(item.id, item))
+                  : itemMap.value.set(data.json.id, data.json)
             resolve(data)
          }, reject)
       })
    }
 
-   const syncGlobalPublicItems = () => fetchAndSyncItems('/items')
-   const syncUserPublicItems = (userId) => fetchAndSyncItems(`/users/${userId}/items`)
-   const syncMyItems = () => fetchAndSyncItems('/me/items')
-   const syncItem = (itemId) => fetchAndSyncItems(`/items/${itemId}`)
+   const syncGlobalPublicItems = () => fetchAndSync('/items')
+   const syncUserPublicItems = (userId) => fetchAndSync(`/users/${userId}/items`)
+   const syncMyItems = () => fetchAndSync('/me/items')
+   const syncItem = (itemId) => fetchAndSync(`/items/${itemId}`)
 
    return {
-      items: computed(() => [...items.value.values()]),
+      items,
       syncGlobalPublicItems,
       syncUserPublicItems,
       syncMyItems,
