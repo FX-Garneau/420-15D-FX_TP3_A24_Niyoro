@@ -1,12 +1,15 @@
 <script setup>
+import { useTagsStore } from '@/stores/tags'
 
 defineProps({
    item: Object
 })
+
+const tagsStore = useTagsStore()
 </script>
 
 <template>
-   <div class="card card-bordered bg-base-100 w-96 shadow-xl">
+   <div class="card card-bordered border-neutral bg-base-100 w-96 shadow-xl">
       <!-- <figure>
          <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
       </figure> -->
@@ -18,8 +21,7 @@ defineProps({
          </h2>
          <p>{{ item.content }}</p>
          <div class="card-actions justify-end">
-            <div class="badge badge-outline">Fashion</div>
-            <div class="badge badge-outline">Products</div>
+            <span v-for="tag in tagsStore.idsToNames(item.tags, true)" class="badge badge-outline">{{ tag }}</span>
          </div>
       </div>
    </div>
