@@ -9,7 +9,8 @@ const router = express.Router();
 // Crée un nouveau tag
 router.post("/tags", isAuth(true), createTag);
 // Récupère tous les tags
-router.get("/tags", isAuth(true), getAllTags);
+// router.get("/tags", isAuth(true), getAllTags);
+router.get("/tags", getAllTags);
 // Récupère un tag spécifique par son identifiant
 router.get("/tags/:tag_id", isAuth(true), prefetch(Tag, "tag_id"), getTagById);
 // Met à jour un tag spécifique par son identifiant

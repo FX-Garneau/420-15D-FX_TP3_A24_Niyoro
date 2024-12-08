@@ -25,9 +25,10 @@ export async function createTag(req, res, next) {
  * @param {express.NextFunction} next
  */
 export async function getAllTags(req, res, next) {
-   req.user
-      ? Tag.find({}).then(res.json.bind(res), next)
-      : next(new Error);
+   // req.user
+   //    ? Tag.find({}).then(res.json.bind(res), next)
+   //    : next(new Error);
+   Tag.find({}).then(res.json.bind(res), next);
 };
 
 /**
