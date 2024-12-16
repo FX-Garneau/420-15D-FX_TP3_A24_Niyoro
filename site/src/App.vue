@@ -23,4 +23,15 @@ body {
    background-repeat: no-repeat;
    background-attachment: fixed;
 }
+
+.btn-success {
+   color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity)))
+}
+
+
+.menu li>*:not(ul, .menu-title, details, .btn):active,
+.menu li>*:not(ul, .menu-title, details, .btn).active,
+.menu li>details>summary:active {
+   background-color: rgb(255 255 255 / 15%);
+}
 </style>

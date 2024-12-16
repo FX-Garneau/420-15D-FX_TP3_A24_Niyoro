@@ -17,6 +17,7 @@ export default {
          'dracula',
          {
             custom: {
+               ...require("daisyui/src/theming/themes")["dracula"],
                "primary": "#7480ff",
                "secondary": "#ff52d9",
                "accent": "#00cdb8",
