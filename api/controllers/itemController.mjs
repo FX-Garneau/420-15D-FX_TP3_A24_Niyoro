@@ -45,7 +45,7 @@ export async function getItems(req, res, next) {
    // req.user
    //    ? Item.find({ private: false }).then(res.json.bind(res), next)
    //    : next(new Error);
-   Item.find({ private: false }).then(res.json.bind(res), next);
+   Item.find({ private: false }).sort("-createdAt").populate("created_by").then(res.json.bind(res), next);
 };
 
 /**
@@ -60,7 +60,7 @@ export async function getItemsByUser(req, res, next) {
       ? Item.find({
          created_by: user._id,
          ...(req.user._id === user._id ? {} : { private: false })
-      }).then(res.json.bind(res), next)
+      }).sort("-createdAt").populate("created_by").then(res.json.bind(res), next)
       : next(new Error);
 };
 
@@ -72,7 +72,7 @@ export async function getItemsByUser(req, res, next) {
  */
 export async function getItem(req, res, next) {
    req.user && req.resource instanceof Item
-      ? res.json(req.resource)
+      ? res.json(await req.resource.populate("created_by"))
       : next(new Error);
 };
 
