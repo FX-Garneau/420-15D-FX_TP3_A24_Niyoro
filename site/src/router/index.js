@@ -5,11 +5,17 @@ const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),
    routes: [
       {
-         path: '/',
+         path: '/:tag?',
          name: 'home',
          meta: { title: 'Accueil' },
          component: () => import('@/views/HomeView.vue')
       },
+      // {
+      //    path: '/:tag',
+      //    name: 'tag',
+      //    meta: {},
+      //    component: () => import('@/views/HomeView.vue')
+      // },
       {
          path: '/signup',
          name: 'signup',
@@ -21,11 +27,6 @@ const router = createRouter({
          name: 'login',
          meta: { title: 'Connexion', auth: false },
          component: () => import('@/views/LoginView.vue'),
-      },
-      {
-         path: '/:tag',
-         name: 'tag',
-         meta: {}
       },
       {
          path: '/item/:id',

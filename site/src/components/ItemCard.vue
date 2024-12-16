@@ -1,12 +1,10 @@
 <script setup>
 import { useTagsStore } from '@/stores/tags'
-import { useUserStore } from '@/stores/user';
 
 const props = defineProps({
    item: Object
 })
 
-const userStore = useUserStore()
 const tagsStore = useTagsStore()
 
 /** @type {import("../stores/types").Item} */
@@ -33,8 +31,8 @@ const item = props.item
                <i class="bi bi-tags-fill"></i>
                Tags:
             </span>
-            <RouterLink v-for="tag in item.tags" class="badge badge-outline"
-               :to="{ name: 'tag', params: { tag: tag } }">
+            <RouterLink v-for="tag in item.tags" class="badge badge-outline badge-primary-content"
+               :to="{ name: 'home', params: { tag } }">
                {{ tagsStore.tags.find(t => t._id === tag)?.name }}
             </RouterLink>
          </div>
@@ -47,7 +45,7 @@ const item = props.item
          </div>
          <div>
             <RouterLink :to="{ name: 'profile', params: { id: item.created_by._id } }" class="text-primary">
-               <i class="bi bi-person-circle"></i>
+               <i class="bi bi-person-fill"></i>
                {{ item.created_by.username }}
             </RouterLink>
          </div>
