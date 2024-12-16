@@ -12,21 +12,16 @@ const onlyMine = ref(false);
 
 // Récupérer les stores
 const userStore = useUserStore()
+const { account } = storeToRefs(userStore)
 const tagsStore = useTagsStore()
 const itemsStore = useItemsStore()
 const { items } = storeToRefs(itemsStore)
 
 // Filtrer les items visibles
-const visibleItems = computed(() => {
-   var _items = onlyMine.value && userStore.account != null
-      ? items.value.filter(item => item.created_by === userStore.account?._id)
-      : items.value.filter(item => item.private === false)
-   // Trier les items par date de création
-   _items.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-   // Positionner les items épinglés en premier
-   _items.sort((a, b) => b.sticky - a.sticky)
-   return _items
-})
+const visibleItems = computed(() => onlyMine.value && account.value
+   ? items.value.filter(item => { if (item.isOwned) console.log("owned:", item); return item.isOwned })
+   : items.value.filter(item => item.private === false)
+)
 
 // Récupérer les items et les tags
 const refreshing = ref(false)
@@ -53,7 +48,7 @@ refresh()
       <h1 class="text-3xl">Accueil</h1>
       <div>
          <h2 class="text-xl mb-2">Filtres</h2>
-         <template v-if="userStore.account">
+         <template v-if="account">
             <FormComponent kind="checkbox" label="Montrer seulement mes items" v-model="onlyMine" />
          </template>
          <div v-else class="tooltip tooltip-bottom" data-tip="Vous devez être connecter pour utiliser cette option">
@@ -69,7 +64,7 @@ refresh()
             </button>
          </h2>
          <div class="flex flex-wrap gap-4">
-            <ItemCard v-for="item in visibleItems" :item="item" />
+            <ItemCard v-for="item in visibleItems" :key="item._id" :item="item" />
          </div>
       </div>
    </div>

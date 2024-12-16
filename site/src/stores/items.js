@@ -1,28 +1,73 @@
 import { ref, computed } from 'vue'
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore, storeToRefs } from 'pinia'
 import { APIRequest } from '@/utils'
+import { useUserStore } from './user'
+
+const { account } = storeToRefs(useUserStore())
 
 export const useItemsStore = defineStore('items', () => {
-   // The last items fetched
    const itemMap = ref(new Map())
-   const items = computed(() => [...itemMap.value.values()])
+   /** @type {import('vue').ComputedRef<import('./types').Item[]>} */
+   const items = computed(() => {
+      return [...itemMap.value.values()]
+         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Trier les items par date de création
+         .sort((a, b) => b.sticky - a.sticky) // Positionner les items épinglés en premier
+   })
 
-   function fetchAndSync(route, body) {
+   /**
+    * Create an item object with additional methods and accessors
+    * @param {object} json
+    * @returns {import('./types').Item}
+    */
+   function makeItemObject(json) {
+      return {
+         ...json,
+         /** Whether the item is owned by the current user */
+         get isOwned() {
+            return this.created_by._id === account.value?._id
+         },
+         /** Toggle and update the sticky state of the item */
+         async update() {
+            return await APIRequest('PUT', `/items/${this._id}`, this)
+         },
+         /** Delete the item */
+         async delete() {
+            return await APIRequest('DELETE', `/items/${this._id}`).then(() => itemMap.value.delete(this._id))
+         }
+      }
+   }
+
+   /**
+    * Save the fetched item(s) to the cache
+    * @param {object | object[]} json
+    * @returns {void}
+    */
+   function saveToCache(json) {
+      Array.isArray(json)
+         ? json.forEach(item => itemMap.value.set(item._id, makeItemObject(item)))
+         : itemMap.value.set(json._id, makeItemObject(json))
+   }
+
+   /**
+    * Fetch data from the API and save it to the cache
+    * @param {string} route 
+    * @param {object} [body] 
+    * @returns {Promise<{ response: Response, json: object | object[] }>}
+    */
+   function requestAndSaveToCache(route, body) {
       return new Promise((resolve, reject) => {
          APIRequest('GET', route, body).then(data => {
             if (data.response.ok)
-               Array.isArray(data.json)
-                  ? data.json.forEach(item => itemMap.value.set(item._id, item))
-                  : itemMap.value.set(data.json._id, data.json)
+               saveToCache(data.json)
             resolve(data)
          }, reject)
       })
    }
 
-   const syncGlobalPublicItems = () => fetchAndSync('/items')
-   const syncUserPublicItems = (userId) => fetchAndSync(`/users/${userId}/items`)
-   const syncMyItems = () => fetchAndSync('/me/items')
-   const syncItem = (itemId) => fetchAndSync(`/items/${itemId}`)
+   const syncGlobalPublicItems = () => requestAndSaveToCache('/items')
+   const syncUserPublicItems = (userId) => requestAndSaveToCache(`/users/${userId}/items`)
+   const syncMyItems = () => requestAndSaveToCache('/me/items')
+   const syncItem = (itemId) => requestAndSaveToCache(`/items/${itemId}`)
 
    return {
       items,
