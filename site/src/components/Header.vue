@@ -7,7 +7,7 @@ const userStore = useUserStore();
 
 <template>
    <header>
-      <div class="navbar bg-base-100">
+      <div class="navbar">
          <!-- Navigation Menu (Dropdown) -->
          <div class="flex-none">
             <div v-if="userStore.account" class="dropdown">

@@ -12,11 +12,8 @@ const item = props.item
 </script>
 
 <template>
-   <div class="card card-compact card-bordered border-neutral w-96 shadow-xl">
-      <!-- <figure>
-         <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-      </figure> -->
-      <div class="card-body">
+   <div class="card card-compact card-bordered border-neutral w-96 shadow-xl glass !bg-none">
+      <div class="card-body justify-between *:flex-grow-0">
          <h2 class="card-title flex items-center">
             <a v-if="item.url" :href="item.url" class="text-info">{{ item.title }} <i class="bi bi-link-45deg"></i></a>
             <template v-else>{{ item.title }}</template>

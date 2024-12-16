@@ -28,7 +28,7 @@ const selectedRoutes = computed(() => {
 
 <template>
    <ul class="menu"
-      :class="$props.dropdown ? 'dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-neutral' : ''"
+      :class="$props.dropdown ? 'dropdown-content glass rounded-box z-[1] w-52 p-2 shadow border border-neutral' : ''"
       :tabindex="$props.dropdown ? '0' : ''">
       <li v-for="route in selectedRoutes">
          <RouterLink v-if="allRoutes.find(r => r.name === route.name)" :to="{ name: route.name }"
