@@ -32,8 +32,8 @@ const item = props.item
                Tags:
             </span>
             <RouterLink v-for="tag in item.tags" class="badge badge-outline badge-primary-content"
-               :to="{ name: 'home', params: { tag } }">
-               {{ tagsStore.tags.find(t => t._id === tag)?.name }}
+               :to="{ name: 'home', params: { tag: tag } }">
+               #{{ tagsStore.tags.find(t => t._id === tag)?.name }}
             </RouterLink>
          </div>
          <div>
@@ -51,7 +51,11 @@ const item = props.item
          </div>
          <div class="card-actions items-center">
             <span class="flex-grow">
-               <a class="link text-accent" :href="item.permalink">Détails</a>
+               <!-- Les consignes disent de mettre le permalien ici, mais cela ne fait pas de sens -->
+               <!-- puisqu'il n'y a pas de page correspondant a cette route. Donc je vais mettre "/item/:id". -->
+               <RouterLink :to="{ name: 'item', params: { id: item._id } }" class="link text-accent">
+                  Détails
+               </RouterLink>
             </span>
             <template v-if="item.isOwned">
                <button @click="item.sticky = !item.sticky, item.update()" class="btn btn-sm btn-square btn-secondary"

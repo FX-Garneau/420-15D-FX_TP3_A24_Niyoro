@@ -10,12 +10,6 @@ const router = createRouter({
          meta: { title: 'Accueil' },
          component: () => import('@/views/HomeView.vue')
       },
-      // {
-      //    path: '/:tag',
-      //    name: 'tag',
-      //    meta: {},
-      //    component: () => import('@/views/HomeView.vue')
-      // },
       {
          path: '/signup',
          name: 'signup',
@@ -31,7 +25,8 @@ const router = createRouter({
       {
          path: '/item/:id',
          name: 'item',
-         meta: {}
+         meta: {},
+         component: () => import('@/views/ItemView.vue')
       },
       {
          path: '/add',

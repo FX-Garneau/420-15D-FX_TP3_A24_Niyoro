@@ -5,7 +5,7 @@ import { useItemsStore } from '@/stores/items'
 import { useTagsStore } from '@/stores/tags'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 // Initier l'état du filtre "Montrer seulement mes items" à faux
@@ -15,18 +15,28 @@ const onlyMine = ref(false);
 const userStore = useUserStore()
 const { account } = storeToRefs(userStore)
 const tagsStore = useTagsStore()
+const { tags } = storeToRefs(tagsStore)
 const itemsStore = useItemsStore()
 const { items } = storeToRefs(itemsStore)
 
 // Filtrer les items visibles
 const route = useRoute()
+const filteredTag = computed(() => route.params.tag && tags.value.find(tag => tag._id === route.params.tag || tag.name === decodeURIComponent(route.params.tag)))
 const visibleItems = computed(() => {
    const _items = onlyMine.value && account.value
       ? items.value.filter(item => item.isOwned)
       : items.value.filter(item => item.private === false)
-   return route.params.tag
-      ? _items.filter(item => item.tags.includes(route.params.tag))
+   return filteredTag.value
+      ? _items.filter(item => item.tags.includes(filteredTag.value._id))
       : _items
+})
+
+watch(() => route.params.tag, newTag => {
+   if (newTag) {
+      const matchingTag = tags.value.find(tag => tag._id === newTag)
+      if (matchingTag)
+         window.history.replaceState({}, '', '/' + encodeURIComponent(matchingTag.name))
+   }
 })
 
 // Récupérer les items et les tags
