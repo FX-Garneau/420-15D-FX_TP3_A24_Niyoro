@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const reactionSchema = new Schema({
    type: {
-      type: String,
+      type: Number,
       enum: [1, 2, 3, 4],
       required: true
    },
