@@ -125,19 +125,23 @@ const history = window.history
                </RouterLink>
                <template v-if="detailsMode">
                   <!-- Reactions -->
-                  <button class="btn btn-sm btn-secondary" @click="itemReact(1)" :disabled="!account">
+                  <button class="btn btn-sm btn-secondary" @click="itemReact(1)" :disabled="!account"
+                     :class="{ 'btn-outline': item.userReaction?.type !== 1 }">
                      <i class="bi bi-heart-fill"></i>
                      {{ item.reactions.filter(r => r.type === 1).length }}
                   </button>
-                  <button class="btn btn-sm btn-warning" @click="itemReact(2)" :disabled="!account">
+                  <button class="btn btn-sm btn-warning" @click="itemReact(2)" :disabled="!account"
+                     :class="{ 'btn-outline': item.userReaction?.type !== 2 }">
                      <i class="bi bi-lightbulb-fill"></i>
                      {{ item.reactions.filter(r => r.type === 2).length }}
                   </button>
-                  <button class="btn btn-sm btn-success" @click="itemReact(3)" :disabled="!account">
+                  <button class="btn btn-sm btn-success" @click="itemReact(3)" :disabled="!account"
+                     :class="{ 'btn-outline': item.userReaction?.type !== 3 }">
                      <i class="bi bi-emoji-laughing-fill"></i>
                      {{ item.reactions.filter(r => r.type === 3).length }}
                   </button>
-                  <button class="btn btn-sm btn-error" @click="itemReact(4)" :disabled="!account">
+                  <button class="btn btn-sm btn-error" @click="itemReact(4)" :disabled="!account"
+                     :class="{ 'btn-outline': item.userReaction?.type !== 4 }">
                      <i class="bi bi-exclamation-triangle-fill"></i>
                      {{ item.reactions.filter(r => r.type === 4).length }}
                   </button>
