@@ -13,6 +13,9 @@ async function addItemFormCallback(data, components) {
       delete data.longitude
    }
    data.private = Boolean(data.private)
+   if (data.tags?.trim()) {
+      data.tags = data.tags.trim().split(' ').map(tag => tag.trim()).filter(Boolean)
+   }
    await APIRequest('POST', '/items', data)
       .then(async ({ response, json }) => {
          error.value = null
@@ -52,7 +55,7 @@ async function addItemFormCallback(data, components) {
                <FormComponent kind="text" name="title" label="Titre" required />
                <FormComponent kind="text" name="url" label="URL" :rules="validationRules.url" />
                <FormComponent kind="text" name="content" label="Contenu" />
-               <FormComponent kind="text" name="tags" label="Tags" />
+               <FormComponent kind="text" name="tags" label="Tags" :rules="validationRules.tagList" />
                <FormComponent kind="number" name="latitude" label="Latitude" :rules="validationRules.latitude" />
                <FormComponent kind="number" name="longitude" label="Longitude" :rules="validationRules.longitude" />
                <FormComponent kind="checkbox" name="private" label="Privé" checked />

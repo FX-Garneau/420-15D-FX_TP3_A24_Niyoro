@@ -40,5 +40,6 @@ export const validationRules = {
    password: [[v => v.trim().length < 6, 'Doit contenir au moins 6 caractères']],
    latitude: [[v => +v < -90 || +v > 90, 'Doit être entre -90 et 90']],
    longitude: [[v => +v < -180 || +v > 180, 'Doit être entre -180 et 180']],
-   url: [[v => !/^(http|https):\/\/[^ "]+$/.test(v.trim()), 'Format invalide']]
+   url: [[v => !/^(http|https):\/\/[^ "]+$/.test(v.trim()), 'Format invalide']],
+   tagList: [[v => v && !v?.split(" ").every(tag => /^[A-z0-9\_\-]+$/.test(tag.trim())), 'Tags invalides']]
 }
