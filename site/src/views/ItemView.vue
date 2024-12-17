@@ -20,7 +20,7 @@ itemsStore.syncItem(itemId).then(() => {
 
 <template>
    <div class="container flex justify-center items-center p-4 min-w-xl">
-      <ItemCard v-if="loading || item" :item="item" class="h-fit" :class="{ 'skeleton': true }" />
+      <ItemCard v-if="loading || item" :item="item" class="h-fit" />
       <div v-else class="w-full flex justify-center items-center">
          <div class="text-center">
             <i class="bi bi-exclamation-triangle text-warning text-9xl"></i>

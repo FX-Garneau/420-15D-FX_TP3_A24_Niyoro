@@ -18,7 +18,7 @@ import Footer from './components/Footer.vue';
 
 <style>
 body {
-   background-image: url("https://image-processor-storage.s3.us-west-2.amazonaws.com/uploads/b5c4700668ebee95676a7a75ab54fa20/abstractjpg.jpg");
+   background-image: url("https://iili.io/2hQeqml.jpg");
    background-size: cover;
    background-repeat: no-repeat;
    background-attachment: fixed;
