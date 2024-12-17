@@ -25,7 +25,7 @@ const userStore = useUserStore();
             <!-- Logo -->
             <RouterLink :to="{ name: 'home' }" class="btn btn-ghost text-xl tracking-wider italic">Niyɔrɔ</RouterLink>
             <!-- Navigation Menu -->
-            <NavigationMenu class="menu-horizontal gap-2" :routes="[]" />
+            <NavigationMenu class="menu-horizontal gap-2" :routes="['add']" />
          </div>
          <!-- Account + Avatar -->
          <div class="flex-none flex gap-2">
