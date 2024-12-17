@@ -1,6 +1,7 @@
 import express from "express";
 import { Reaction } from "../models/reaction.mjs";
 import { ResponseError } from "../utils.mjs";
+import { Item } from "../models/item.mjs";
 
 /**
  * Récupère toutes les réactions associées à un item spécifique
@@ -9,8 +10,8 @@ import { ResponseError } from "../utils.mjs";
  * @param {express.NextFunction} next
  */
 export async function getReactionsByItem(req, res, next) {
-   req.user && req.resource instanceof Reaction
-      ? res.json(req.resource)
+   req.user && req.resource instanceof Item
+      ? Reaction.find({ item_id: req.resource._id }).then(res.json.bind(res), next)
       : next(new Error);
 }
 
