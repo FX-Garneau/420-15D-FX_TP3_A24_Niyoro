@@ -40,7 +40,7 @@ defineOptions({
    inheritAttrs: false,
 })
 
-const borderColor = computed(() => ({ "!border-error": !!errors.value.length }))
+const borderColor = computed(() => ({ "!border !border-solid !border-error": !!errors.value.length }))
 </script>
 
 <template>
@@ -49,14 +49,14 @@ const borderColor = computed(() => ({ "!border-error": !!errors.value.length }))
       <template v-if="['text', 'password', 'email'].includes(kind)">
          <FormLabel v-if="label" :text="label" :required="required" />
          <input v-bind="$attrs" v-model="v_model" @input="validate" :type="kind" :name="name"
-            class="input input-bordered focus:outline-none" :class="borderColor" />
+            class="input input-bordered glass !bg-none" :class="borderColor" />
       </template>
 
       <!-- Template for checkbox -->
       <template v-else-if="kind === 'checkbox'">
          <div class="flex gap-2">
-            <input v-bind="$attrs" v-model="v_model" @change="validate" :type="kind" :name="name" class="checkbox"
-               :class="borderColor" />
+            <input v-bind="$attrs" v-model="v_model" @change="validate" :type="kind" :name="name"
+               class="checkbox glass !bg-none" :class="borderColor" />
             <FormLabel v-if="label" :text="label" :required="required" class="!p-0" />
          </div>
       </template>
@@ -65,20 +65,18 @@ const borderColor = computed(() => ({ "!border-error": !!errors.value.length }))
       <template v-else-if="kind === 'date'">
          <FormLabel v-if="label" :text="label" :required="required" />
          <input v-bind="$attrs" v-model="v_model" @input="validate" :type="kind" :name="name"
-            class="input input-bordered focus:outline-none" :class="borderColor" />
+            class="input input-bordered glass !bg-none" :class="borderColor" />
       </template>
 
       <!-- Template for number pickers -->
       <template v-else-if="kind === 'number'">
          <FormLabel v-if="label" :text="label" :required="required" />
          <input v-bind="$attrs" v-model="v_model" min="0" @input="validate" :type="kind" :name="name"
-            class="input input-bordered focus:outline-none" :class="borderColor" />
+            class="input input-bordered glass !bg-none" :class="borderColor" />
       </template>
 
       <!-- Error messages -->
-      <template v-if="kind !== 'betNumber'">
-         <FormComponentErrors :errors="errors" />
-      </template>
+      <FormComponentErrors :errors="errors" />
    </div>
 </template>
 
