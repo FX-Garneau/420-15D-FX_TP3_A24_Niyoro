@@ -1,5 +1,10 @@
-declare export interface Item {
+interface MongoDBObject {
    _id: string;
+   createdAt: string;
+   updatedAt: string;
+}
+
+declare export interface Item extends MongoDBObject {
    title: string;
    url?: string;
    content?: string;
@@ -10,9 +15,22 @@ declare export interface Item {
    permalink?: string;
    tags: string[];
    created_by: string | object;
-   createdAt: string;
-   updatedAt: string;
+   // Self
    get isOwned(): boolean;
-   update(): void;
-   delete(): void;
+   update(): Promise<void>;
+   delete(): Promise<void>;
+   // Reactions
+   reactions: Reaction[];
+   get userReaction(): Reaction | undefined;
+   syncReactions(): Promise<void>;
+   react(type: Reaction["type"]): Promise<void>;
+   unreact(): Promise<void>;
+   // Tags
+   syncUncachedTags(): Promise<void>;
+}
+
+declare export interface Reaction extends MongoDBObject {
+   type: 1 | 2 | 3 | 4;
+   user_id: string;
+   item_id: string;
 }

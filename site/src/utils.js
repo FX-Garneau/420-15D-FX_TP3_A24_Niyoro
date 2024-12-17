@@ -16,7 +16,8 @@ export function APIRequest(method, route, body) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
          },
-         body: JSON.stringify(body)
+         body: JSON.stringify(body),
+         signal: AbortSignal.timeout(3000)
       }).then(async response => {
          try {
             // If the user is authenticated and the server returns a 401 status code, the token is invalid, so we remove it

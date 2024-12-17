@@ -24,9 +24,9 @@ body {
    background-attachment: fixed;
 }
 
-.btn-success {
+/* .btn-success {
    color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity)))
-}
+} */
 
 
 .menu li>*:not(ul, .menu-title, details, .btn):active,

@@ -22,12 +22,12 @@ export async function getReactionsByItem(req, res, next) {
  * @param {express.NextFunction} next
  */
 export async function createReaction(req, res, next) {
-   req.user && req.resource instanceof Reaction
-      ? !await Reaction.exists({ user_id: req.user._id, item_id: req.resource.item_id })
+   req.user && req.resource instanceof Item
+      ? !await Reaction.exists({ user_id: req.user._id, item_id: req.resource._id })
          ? Reaction.create({
             type: req.body.type,
             user_id: req.user._id,
-            item_id: req.resource.item_id
+            item_id: req.resource._id
          }).then(res.status(201).json.bind(res), next)
          : next(new ResponseError(409, "Vous avez déjà réagi à cet item"))
       : next(new Error);

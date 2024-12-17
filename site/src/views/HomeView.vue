@@ -80,7 +80,7 @@ refresh()
             </button>
          </h2>
          <div class="flex flex-wrap gap-4">
-            <ItemCard v-for="item in visibleItems" :key="item._id" :item="item" />
+            <ItemCard v-for="item in visibleItems" :key="item._id" :itemId="item._id" />
          </div>
       </div>
    </div>

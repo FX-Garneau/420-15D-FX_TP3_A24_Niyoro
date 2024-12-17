@@ -2,8 +2,11 @@ import { ref, computed } from 'vue'
 import { acceptHMRUpdate, defineStore, storeToRefs } from 'pinia'
 import { APIRequest } from '@/utils'
 import { useUserStore } from './user'
+import { useTagsStore } from './tags'
 
 const { account } = storeToRefs(useUserStore())
+const tagsStore = useTagsStore()
+const { tags } = storeToRefs(tagsStore)
 
 export const useItemsStore = defineStore('items', () => {
    const itemMap = ref(new Map())
@@ -28,11 +31,36 @@ export const useItemsStore = defineStore('items', () => {
          },
          /** Toggle and update the sticky state of the item */
          async update() {
-            return await APIRequest('PUT', `/items/${this._id}`, this)
+            await APIRequest('PUT', `/items/${this._id}`, this)
          },
          /** Delete the item */
          async delete() {
-            return await APIRequest('DELETE', `/items/${this._id}`).then(() => itemMap.value.delete(this._id))
+            await APIRequest('DELETE', `/items/${this._id}`).then(() => itemMap.value.delete(this._id))
+         },
+         reactions: [],
+         /** Whether the current user has reacted to the item */
+         get userReaction() {
+            return this.reactions?.find(reaction => reaction.user_id === account.value?._id)
+         },
+         /** Sync the item's reactions */
+         async syncReactions() {
+            await APIRequest('GET', `/items/${this._id}/reactions`).then(data => {
+               if (data.response.ok) this.reactions = data.json
+            })
+         },
+         /** React to the item */
+         async react(type) {
+            await APIRequest('POST', `/items/${this._id}/reactions`, { type })
+         },
+         /** Delete the user's reaction */
+         async unreact() {
+            const reaction = this.userReaction
+            if (reaction) await APIRequest('DELETE', `/reactions/${reaction._id}`)
+         },
+         /** Sync uncached tags, if there are any */
+         async syncUncachedTags() {
+            if (this.tags.some(tagId => !tags.value?.find(tag => tag._id === tagId)))
+               await tagsStore.syncTags()
          }
       }
    }
