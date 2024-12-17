@@ -12,15 +12,26 @@ async function addItemFormCallback(data, components) {
       delete data.latitude
       delete data.longitude
    }
+   data.private = Boolean(data.private)
    await APIRequest('POST', '/items', data)
       .then(async ({ response, json }) => {
          error.value = null
          if (response.ok) {
-            console.log("ok")
+            // Redirect to the item page
+            await router.push({ name: 'ItemView', params: { id: json.data.id } })
          } else {
-            // Display the error message
-            error.value = json?.message ?? 'Une erreur est survenue'
-            console.log("not ok", json?.data)
+            if (Object.keys(json?.data ?? {})) {
+               // Display the form errors next to the fields
+               if (json.data && typeof json.data === "object") {
+                  for (const [key, value] of Object.entries(json.data)) {
+                     const errorList = components.get(key)?.exposed?.errors;
+                     if (errorList) errorList.value = [value];
+                  }
+               }
+            } else {
+               // Display the error message
+               error.value = json?.message ?? 'Une erreur est survenue'
+            }
          }
       })
       .catch(error => {
@@ -38,7 +49,7 @@ async function addItemFormCallback(data, components) {
             <h1 class="card-title text-2xl mb-4 justify-center">Ajouter un item</h1>
             <FormErrors :error="error" />
             <div class="grid md:grid-cols-2 gap-4 *:w-72">
-               <FormComponent kind="text" name="title" label="Titre" required :rules="validationRules.maxChar100" />
+               <FormComponent kind="text" name="title" label="Titre" required />
                <FormComponent kind="text" name="url" label="URL" :rules="validationRules.url" />
                <FormComponent kind="text" name="content" label="Contenu" />
                <FormComponent kind="text" name="tags" label="Tags" />
