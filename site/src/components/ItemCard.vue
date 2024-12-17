@@ -1,6 +1,6 @@
 <script setup>
 import { useTagsStore } from '@/stores/tags'
-import { computed } from 'vue';
+import { computed, onMounted, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
 const props = defineProps({
@@ -11,7 +11,24 @@ const tagsStore = useTagsStore()
 
 /** @type {import("../stores/types").Item} */
 const item = props.item
+
 const detailsMode = computed(() => useRoute().params.id === item._id)
+
+window.scrollTo({ top: 0, behavior: 'smooth' })
+
+// Carte
+const randomMapId = Math.random().toString(36).substring(7)
+const hasMap = computed(() => item.latitude != null && item.longitude != null)
+
+onMounted(() => {
+   watchEffect(() => {
+      if (hasMap.value) {
+         const map = L.map(randomMapId).setView([item.latitude, item.longitude], 13)
+         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+         L.marker([item.latitude, item.longitude]).addTo(map)
+      }
+   })
+})
 </script>
 
 <template>
@@ -41,7 +58,11 @@ const detailsMode = computed(() => useRoute().params.id === item._id)
             </span>
          </h2>
          <!-- Content -->
-         <p class="border border-neutral-50 border-opacity-25 rounded p-2">{{ item.content }}</p>
+         <div class="border border-neutral-50 border-opacity-25 rounded p-2">
+            {{ item.content }}
+            <!-- Map -->
+            <div :id="randomMapId" class="hidden h-28 mt-3" :class="{ '!block': detailsMode && hasMap }"></div>
+         </div>
          <!-- Tags -->
          <div class="card-actions">
             <i class="bi bi-tags-fill"></i>
