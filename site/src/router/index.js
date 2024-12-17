@@ -31,7 +31,8 @@ const router = createRouter({
       {
          path: '/add',
          name: 'add',
-         meta: {}
+         meta: { title: 'Ajouter un item', auth: true },
+         component: () => import('@/views/AddItemView.vue')
       },
       {
          path: '/tags',

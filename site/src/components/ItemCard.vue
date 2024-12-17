@@ -12,7 +12,7 @@ const props = defineProps({
 })
 
 // States
-const detailsMode = computed(() => useRoute().params.id === props.itemId)
+const detailsMode = computed(() => useRoute()?.params?.id === props.itemId)
 
 // Stores
 const { account } = storeToRefs(useUserStore())

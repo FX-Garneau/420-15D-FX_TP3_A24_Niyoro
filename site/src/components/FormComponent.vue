@@ -55,8 +55,8 @@ const borderColor = computed(() => ({ "!border !border-solid !border-error": !!e
       <!-- Template for checkbox -->
       <template v-else-if="kind === 'checkbox'">
          <div class="flex gap-2">
-            <input v-bind="$attrs" v-model="v_model" @change="validate" :type="kind" :name="name"
-               class="checkbox glass !bg-none" :class="borderColor" />
+            <input v-bind="$attrs" v-model="v_model" @change="validate" :type="kind" :name="name" class="checkbox"
+               :class="borderColor" />
             <FormLabel v-if="label" :text="label" :required="required" class="!p-0" />
          </div>
       </template>

@@ -18,7 +18,7 @@ const userStore = useUserStore();
                      </path>
                   </svg>
                </div>
-               <NavigationMenu dropdown :routes="['home']" />
+               <NavigationMenu dropdown :routes="['home', 'add']" />
             </div>
          </div>
          <div class="flex-1">
