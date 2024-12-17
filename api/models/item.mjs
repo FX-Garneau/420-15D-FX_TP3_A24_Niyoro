@@ -38,7 +38,7 @@ const itemSchema = new Schema({
    },
    private: {
       type: Boolean,
-      default: true // Privé par défaut
+      default: false
    },
    sticky: {
       type: Boolean,
