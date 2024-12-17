@@ -31,8 +31,8 @@ export async function errorHandler(caught, req, res, next) {
             error = new ResponseError(400, "ID de ressource invalide : " + caught.value);
             break;
          case caught instanceof mongoose.Error.ValidationError:
-            console.log(caught);
-            error = new ResponseError(422, getValidationErrorMessage(caught));
+            error = new ResponseError(422, getValidationErrorMessage(caught),
+               Object.fromEntries(Object.entries(caught.errors).map(entry => [entry[1].path, entry[1].message])));
             break;
          // JWT
          case caught instanceof jwt.JsonWebTokenError:
