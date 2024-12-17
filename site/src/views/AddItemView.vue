@@ -2,6 +2,7 @@
 import Form from '@/components/Form.vue';
 import FormComponent from '@/components/FormComponent.vue';
 import FormErrors from '@/components/FormErrors.vue';
+import router from '@/router/index';
 import { APIRequest, validationRules } from '@/utils';
 import { ref } from 'vue';
 
@@ -21,7 +22,7 @@ async function addItemFormCallback(data, components) {
          error.value = null
          if (response.ok) {
             // Redirect to the item page
-            await router.push({ name: 'ItemView', params: { id: json.data.id } })
+            await router.push({ name: 'home', params: { id: json.data?._id } })
          } else {
             if (Object.keys(json?.data ?? {})) {
                // Display the form errors next to the fields

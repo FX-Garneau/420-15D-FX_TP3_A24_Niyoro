@@ -31,7 +31,11 @@ body {
 .btn-primary,
 .btn-secondary,
 .btn-accent {
-   color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity)))
+   color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity)));
+}
+
+.btn-outline:hover {
+   color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity))) !important;
 }
 
 
