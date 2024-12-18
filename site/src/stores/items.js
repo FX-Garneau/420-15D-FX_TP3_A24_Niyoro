@@ -29,7 +29,7 @@ export const useItemsStore = defineStore('items', () => {
          get isOwned() {
             return this.created_by._id === account.value?._id
          },
-         /** Toggle and update the sticky state of the item */
+         /** Update the item with the current data */
          async update() {
             await APIRequest('PUT', `/items/${this._id}`, this)
          },

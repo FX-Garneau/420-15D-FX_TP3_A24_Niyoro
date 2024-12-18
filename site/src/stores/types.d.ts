@@ -34,3 +34,9 @@ declare export interface Reaction extends MongoDBObject {
    user_id: string;
    item_id: string;
 }
+
+declare export interface Tag extends MongoDBObject {
+   name: string;
+   update(): Promise<void>;
+   delete(): Promise<void>;
+}
