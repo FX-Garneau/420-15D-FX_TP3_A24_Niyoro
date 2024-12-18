@@ -67,8 +67,8 @@ const userSchema = new Schema({
             password: undefined,
             // is_active: undefined,
             // is_admin: undefined,
-            createdAt: undefined,
-            updatedAt: undefined,
+            // createdAt: undefined,
+            // updatedAt: undefined,
             __v: undefined
          };
       }
