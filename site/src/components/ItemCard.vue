@@ -3,7 +3,7 @@ import { useItemsStore } from '@/stores/items';
 import { useTagsStore } from '@/stores/tags'
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const props = defineProps({
@@ -12,7 +12,8 @@ const props = defineProps({
 })
 
 // States
-const detailsMode = computed(() => useRoute()?.params?.id === props.itemId)
+const route = useRoute()
+const detailsMode = computed(() => route.name === 'item' && route.params.id === props.itemId)
 
 // Stores
 const { account } = storeToRefs(useUserStore())
@@ -36,16 +37,19 @@ if (props.autoLoad && !item.value) {
 
 // Map
 const randomMapId = Math.random().toString(36).substring(7)
-const hasMap = computed(() => item.latitude != null && item.longitude != null)
+const hasMap = computed(() => item.value?.latitude != null && item.value?.longitude != null)
 onMounted(() => {
-   watchEffect(() => {
-      if (hasMap.value) {
-         const map = L.map(randomMapId).setView([item.latitude, item.longitude], 13)
-         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-         L.marker([item.latitude, item.longitude]).addTo(map)
-      }
-   })
+   setTimeout(() => renderMap(hasMap), 100)
+   watch(() => hasMap, renderMap)
 })
+
+function renderMap(enabled) {
+   if (enabled) {
+      const map = L.map(randomMapId).setView([item.value.latitude, item.value.longitude], 13)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+      L.marker([item.value.latitude, item.value.longitude]).addTo(map)
+   }
+}
 
 // Reactions
 async function itemReact(type) {
@@ -58,8 +62,6 @@ async function itemReact(type) {
 
 // Other
 window.scrollTo({ top: 0, behavior: 'smooth' })
-
-const history = window.history
 </script>
 
 <template>
@@ -98,7 +100,9 @@ const history = window.history
             <div class="border border-neutral-50 border-opacity-25 rounded p-2">
                {{ item.content }}
                <!-- Map -->
-               <div :id="randomMapId" class="hidden h-28 mt-3" :class="{ '!block': detailsMode && hasMap }"></div>
+               <div :id="randomMapId" :key="randomMapId" class="hidden h-28 mt-3"
+                  :class="{ '!block': detailsMode && hasMap }">
+               </div>
             </div>
             <!-- Tags -->
             <div class="card-actions items-center">
