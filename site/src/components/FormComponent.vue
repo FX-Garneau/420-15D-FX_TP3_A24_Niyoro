@@ -44,7 +44,7 @@ const borderColor = computed(() => ({ "!border !border-solid !border-error": !!e
 </script>
 
 <template>
-   <div class="form-control w-full">
+   <div class="form-control w-full relative">
       <!-- Template for text/password/email -->
       <template v-if="['text', 'password', 'email'].includes(kind)">
          <FormLabel v-if="label" :text="label" :required="required" />
@@ -77,6 +77,8 @@ const borderColor = computed(() => ({ "!border !border-solid !border-error": !!e
 
       <!-- Error messages -->
       <FormComponentErrors :errors="errors" />
+
+      <slot></slot>
    </div>
 </template>
 

@@ -18,7 +18,7 @@ export const useTagsStore = defineStore('tags', () => {
          ...json,
          /** Update the tag with the current data */
          async update() {
-            await APIRequest('PUT', `/tags/${this._id}`, this)
+            return await APIRequest('PUT', `/tags/${this._id}`, this)
          },
       }
    }

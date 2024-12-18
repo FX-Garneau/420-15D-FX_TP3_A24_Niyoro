@@ -34,7 +34,13 @@ body {
    color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity)));
 }
 
-.btn-outline:hover {
+.btn-success.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-error.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-primary.btn-outline:hover,
+.btn-secondary.btn-outline:hover,
+.btn-accent.btn-outline:hover {
    color: var(--fallback-bc, oklch(var(--bc)/var(--tw-text-opacity))) !important;
 }
 

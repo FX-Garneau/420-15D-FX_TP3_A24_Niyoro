@@ -37,7 +37,8 @@ const router = createRouter({
       {
          path: '/tags',
          name: 'tags',
-         meta: { auth: true, admin: true }
+         meta: { title: 'Liste des tags', auth: true, admin: true },
+         component: () => import('@/views/TagsView.vue')
       },
       {
          path: '/profile/:id?',

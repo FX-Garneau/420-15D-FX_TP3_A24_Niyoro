@@ -17,16 +17,16 @@ declare export interface Item extends MongoDBObject {
    created_by: string | object;
    // Self
    get isOwned(): boolean;
-   update(): Promise<void>;
-   delete(): Promise<void>;
+   update(): Promise<{ response: Response; json: any; }>;
+   delete(): Promise<{ response: Response; json: any; }>;
    // Reactions
    reactions: Reaction[];
    get userReaction(): Reaction | undefined;
-   syncReactions(): Promise<void>;
-   react(type: Reaction["type"]): Promise<void>;
-   unreact(): Promise<void>;
+   syncReactions(): Promise<{ response: Response; json: any; }>;
+   react(type: Reaction["type"]): Promise<{ response: Response; json: any; }>;
+   unreact(): Promise<{ response: Response; json: any; } | undefined>;
    // Tags
-   syncUncachedTags(): Promise<void>;
+   syncUncachedTags(): Promise<{ response: Response; json: any; } | undefined>;
 }
 
 declare export interface Reaction extends MongoDBObject {
@@ -37,6 +37,6 @@ declare export interface Reaction extends MongoDBObject {
 
 declare export interface Tag extends MongoDBObject {
    name: string;
-   update(): Promise<void>;
-   delete(): Promise<void>;
+   update(): Promise<{ response: Response; json: any; }>;
+   delete(): Promise<{ response: Response; json: any; }>;
 }

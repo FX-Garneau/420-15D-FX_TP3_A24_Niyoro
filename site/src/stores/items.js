@@ -31,11 +31,11 @@ export const useItemsStore = defineStore('items', () => {
          },
          /** Update the item with the current data */
          async update() {
-            await APIRequest('PUT', `/items/${this._id}`, this)
+            return await APIRequest('PUT', `/items/${this._id}`, this)
          },
          /** Delete the item */
          async delete() {
-            await APIRequest('DELETE', `/items/${this._id}`).then(() => itemMap.value.delete(this._id))
+            return await APIRequest('DELETE', `/items/${this._id}`).then(() => itemMap.value.delete(this._id))
          },
          reactions: [],
          /** Whether the current user has reacted to the item */
@@ -44,23 +44,23 @@ export const useItemsStore = defineStore('items', () => {
          },
          /** Sync the item's reactions */
          async syncReactions() {
-            await APIRequest('GET', `/items/${this._id}/reactions`).then(data => {
+            return await APIRequest('GET', `/items/${this._id}/reactions`).then(data => {
                if (data.response.ok) this.reactions = data.json
             })
          },
          /** React to the item */
          async react(type) {
-            await APIRequest('POST', `/items/${this._id}/reactions`, { type })
+            return await APIRequest('POST', `/items/${this._id}/reactions`, { type })
          },
          /** Delete the user's reaction */
          async unreact() {
             const reaction = this.userReaction
-            if (reaction) await APIRequest('DELETE', `/reactions/${reaction._id}`)
+            if (reaction) return await APIRequest('DELETE', `/reactions/${reaction._id}`)
          },
          /** Sync uncached tags, if there are any */
          async syncUncachedTags() {
             if (this.tags.some(tagId => !tags.value?.find(tag => tag._id === tagId)))
-               await tagsStore.syncTags()
+               return await tagsStore.syncTags()
          }
       }
    }

@@ -18,14 +18,14 @@ const userStore = useUserStore();
                      </path>
                   </svg>
                </div>
-               <NavigationMenu dropdown :routes="['home', 'add']" />
+               <NavigationMenu dropdown :routes="['home', 'add', 'tags']" />
             </div>
          </div>
          <div class="flex-1">
             <!-- Logo -->
             <RouterLink :to="{ name: 'home' }" class="btn btn-ghost text-xl tracking-wider italic">Niyɔrɔ</RouterLink>
             <!-- Navigation Menu -->
-            <NavigationMenu class="menu-horizontal gap-2" :routes="['add']" />
+            <NavigationMenu class="menu-horizontal gap-2" :routes="['add', 'tags']" />
          </div>
          <!-- Account + Avatar -->
          <div class="flex-none flex gap-2">
