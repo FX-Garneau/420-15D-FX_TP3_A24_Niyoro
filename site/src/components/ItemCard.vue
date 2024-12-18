@@ -86,7 +86,7 @@ const history = window.history
                      <button @click="" class="btn btn-sm btn-square rounded-full btn-outline btn-warning">
                         <i class="bi bi-pencil-square"></i>
                      </button>
-                     <button @click="item.delete" class="btn btn-sm btn-square rounded-full btn-outline btn-error">
+                     <button @click="item.delete()" class="btn btn-sm btn-square rounded-full btn-outline btn-error">
                         <i class="bi bi-trash"></i>
                      </button>
                   </template>

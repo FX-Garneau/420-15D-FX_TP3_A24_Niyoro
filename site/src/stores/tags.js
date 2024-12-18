@@ -20,6 +20,10 @@ export const useTagsStore = defineStore('tags', () => {
          async update() {
             return await APIRequest('PUT', `/tags/${this._id}`, this)
          },
+         /** Delete the tag */
+         async delete() {
+            return await APIRequest('DELETE', `/tags/${this._id}`).then(() => tagMap.value.delete(this._id))
+         }
       }
    }
 

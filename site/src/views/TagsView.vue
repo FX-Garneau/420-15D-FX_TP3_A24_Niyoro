@@ -1,9 +1,7 @@
 <script setup>
-import FormComponent from '@/components/FormComponent.vue';
 import { useTagsStore } from '@/stores/tags';
 import { storeToRefs } from 'pinia';
-import { ref, watch, watchEffect } from 'vue';
-
+import { ref } from 'vue';
 
 const tagsStore = useTagsStore()
 const { tags } = storeToRefs(tagsStore);
@@ -28,7 +26,7 @@ function updateTag(tag) {
          if (!res?.response?.ok)
             throw new Error('Error')
          // Remove red border
-         input?.parentElement?.classList.remove('border-solid', 'border-error')
+         tag.isInvalid = false
          // Stop editing
          tag.isEditing = false
          // Sync the tags
@@ -38,7 +36,7 @@ function updateTag(tag) {
       // Revert the name
       tag.name = oldName
       // Add red border
-      input?.parentElement?.classList.add('border-solid', 'border-error')
+      tag.isInvalid = true
       // Focus the input
       input?.focus()
    }
@@ -52,14 +50,17 @@ function updateTag(tag) {
          <div class="card-actions">
             <!-- <span v-for="tag in tags" class="glass !bg-none p-2 pl-3 rounded-full">
             </span> -->
-            <span class="w-fit glass !bg-none rounded-box pr-2" v-for="tag in tags">
+            <span v-for="tag in tags" :key="tag._id" class="w-fit glass !bg-none rounded-box pr-2"
+               :class="{ 'border-error border-solid': tag.isInvalid }">
                <input :id="tag._id" type="text" v-model="newName" :value="tag.isEditing ? newName : tag.name"
                   :disabled="!tag.isEditing" class="input !bg-transparent !border-none !outline-none !text-inherit" />
                <template v-if="tag.isEditing">
-                  <button class="btn btn-sm btn-square btn-success mr-2" @click="updateTag(tag)">
+                  <button class="btn btn-sm btn-square btn-success mr-2" @click="updateTag(tag)"
+                     :disabled="tag.name === newName">
                      <i class="bi bi-check"></i>
                   </button>
-                  <button class="btn btn-sm btn-square btn-error" @click="tag.isEditing = false; newName = tag.name">
+                  <button class="btn btn-sm btn-square btn-error"
+                     @click="tag.isEditing = false; newName = tag.name; tag.isInvalid = false">
                      <i class="bi bi-x"></i>
                   </button>
                </template>
