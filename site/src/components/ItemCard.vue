@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import hljs from 'highlight.js';
 
 const props = defineProps({
    itemId: { type: String, required: true },
@@ -39,12 +40,15 @@ if (props.autoLoad && !item.value) {
 const randomMapId = Math.random().toString(36).substring(7)
 const hasMap = computed(() => item.value?.latitude != null && item.value?.longitude != null)
 onMounted(() => {
-   setTimeout(() => renderMap(hasMap), 100)
+   setTimeout(() => {
+      renderMap(hasMap)
+      hljs.highlightAll()
+   }, 100)
    watch(() => hasMap, renderMap)
 })
 
 function renderMap(enabled) {
-   if (enabled) {
+   if (enabled ** item.value?.latitude != null && item.value?.longitude != null) {
       const map = L.map(randomMapId).setView([item.value.latitude, item.value.longitude], 13)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
       L.marker([item.value.latitude, item.value.longitude]).addTo(map)
@@ -98,7 +102,7 @@ window.scrollTo({ top: 0, behavior: 'smooth' })
             </h2>
             <!-- Content -->
             <div class="border border-neutral-50 border-opacity-25 rounded p-2">
-               {{ item.content }}
+               <div v-html="item.content"></div>
                <!-- Map -->
                <div :id="randomMapId" :key="randomMapId" class="hidden h-28 mt-3"
                   :class="{ '!block': detailsMode && hasMap }">
