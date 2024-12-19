@@ -1,6 +1,7 @@
 import { ref, computed, readonly } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { APIRequest } from '@/utils'
+import router from '@/router/index'
 
 
 export const useUserStore = defineStore('user', () => {
@@ -36,6 +37,7 @@ export const useUserStore = defineStore('user', () => {
       _authToken.value = null
       localStorage.removeItem('token')
       account.value = null
+      router.push({ name: 'login' })
    }
 
    return {

@@ -24,7 +24,7 @@ async function addItemFormCallback(data, components) {
             // Redirect to the item page
             await router.push({ name: 'home', params: { id: json.data?._id } })
          } else {
-            if (Object.keys(json?.data ?? {})) {
+            if (Object.keys(json?.data ?? {}).length) {
                // Display the form errors next to the fields
                if (json.data && typeof json.data === "object") {
                   for (const [key, value] of Object.entries(json.data)) {
