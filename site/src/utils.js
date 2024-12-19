@@ -9,7 +9,7 @@ import { useUserStore } from "./stores/user"
 export function APIRequest(method, route, body) {
    return new Promise((resolve, reject) => {
       const userStore = useUserStore()
-      const endpoint = import.meta.env?.VITE_API_URL ?? ""
+      const endpoint = import.meta.env?.VITE_API_URL ?? "http://localhost:8080"
       fetch(endpoint + route, {
          method,
          headers: {

@@ -21,7 +21,7 @@ const app = express();
 export const ENV = {
    JWT_SECRET: process.env.JWT_SECRET ?? console.warn("La variable d'environnement JWT_SECRET n'est pas définie, utilisation de la clé 'maphrasesupersecrete'") ?? "maphrasesupersecrete",
    MONGODB: process.env.MONGODB ?? console.warn("La variable d'environnement MONGODB n'est pas définie, utilisation de la base de données locale 'test'.") ?? "mongodb://localhost:27017/test",
-   PORT: process.env.PORT ?? console.warn("La variable d'environnement PORT n'est pas définie, utilisation du port 3000.") ?? 3000,
+   PORT: process.env.PORT ?? console.warn("La variable d'environnement PORT n'est pas définie, utilisation du port 8080.") ?? 8080,
 };
 
 app.use(cors({
